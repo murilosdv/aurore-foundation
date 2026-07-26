@@ -1,0 +1,7 @@
+{
+    "explorer.compactFolders": false,
+    "editor.formatOnSave": true,
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    }
+}

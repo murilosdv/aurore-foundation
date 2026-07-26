@@ -1,0 +1,86 @@
+name: Check package/version sync
+description: >
+  Fails unless a src/<Package> change and its Versions.props version bump happen in the same
+  diff. Used by both the push (publish) and pull_request (PR check) pipelines so the rule is
+  defined once.
+
+inputs:
+  package-name:
+    description: Package name, matching the tests/Tests.<name> convention (e.g. "Core").
+    required: true
+  project-path:
+    description: Path to the package's .csproj under src/ (e.g. "src/Core/Core.csproj").
+    required: true
+  version-property:
+    description: MSBuild property in Versions.props holding this package's version (e.g. "CoreVersion").
+    required: true
+  base-sha:
+    description: Commit SHA to diff from.
+    required: true
+  head-sha:
+    description: Commit SHA to diff to.
+    required: true
+  skip-check:
+    description: If 'true', always report src-changed=true and skip the sync validation entirely.
+    required: false
+    default: "false"
+
+outputs:
+  src-changed:
+    description: "'true' if any file under the package's src/ directory changed between base-sha and head-sha."
+    value: ${{ steps.check.outputs.src-changed }}
+  version:
+    description: The version currently in Versions.props for this package (at head-sha).
+    value: ${{ steps.check.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - id: check
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        if [ "${{ inputs.skip-check }}" = "true" ]; then
+          echo "src-changed=true" >> "$GITHUB_OUTPUT"
+          echo "version=$(grep -oP "(?<=<${{ inputs.version-property }}>)[^<]+" Versions.props)" >> "$GITHUB_OUTPUT"
+          echo "::notice::${{ inputs.package-name }}: version-sync check bypassed manually."
+          exit 0
+        fi
+
+        PROJECT_DIR="$(dirname "${{ inputs.project-path }}")"
+        VERSION_PROPERTY="${{ inputs.version-property }}"
+        HEAD_SHA="${{ inputs.head-sha }}"
+        BASE_SHA="${{ inputs.base-sha }}"
+        ZERO_SHA="0000000000000000000000000000000000000000"
+        EMPTY_TREE="4b825dc642cb6eb9a060e54bf8d69288fbee4904"
+
+        # First push to a branch (or a force-push) reports the all-zero SHA as "before".
+        # Fall back to the parent commit, or the empty tree on a repo's very first commit.
+        if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "$ZERO_SHA" ] || ! git cat-file -e "$BASE_SHA" 2>/dev/null; then
+          BASE_SHA="$(git rev-parse "$HEAD_SHA^" 2>/dev/null || echo "$EMPTY_TREE")"
+        fi
+
+        if git diff --quiet "$BASE_SHA" "$HEAD_SHA" -- "$PROJECT_DIR"; then
+          SRC_CHANGED=false
+        else
+          SRC_CHANGED=true
+        fi
+
+        OLD_VERSIONS_PROPS="$(git show "$BASE_SHA:Versions.props" 2>/dev/null || echo "")"
+        OLD_VERSION="$(echo "$OLD_VERSIONS_PROPS" | grep -oP "(?<=<$VERSION_PROPERTY>)[^<]+" || echo "")"
+        NEW_VERSION="$(grep -oP "(?<=<$VERSION_PROPERTY>)[^<]+" Versions.props)"
+
+        if [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
+          VERSION_CHANGED=false
+        else
+          VERSION_CHANGED=true
+        fi
+
+        echo "src-changed=$SRC_CHANGED" >> "$GITHUB_OUTPUT"
+        echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+
+        if [ "$SRC_CHANGED" != "$VERSION_CHANGED" ]; then
+          echo "::error::${{ inputs.package-name }}: src changed=$SRC_CHANGED but $VERSION_PROPERTY changed=$VERSION_CHANGED in Versions.props ($OLD_VERSION -> $NEW_VERSION). Both $PROJECT_DIR and Versions.props must change together."
+          exit 1
+        fi

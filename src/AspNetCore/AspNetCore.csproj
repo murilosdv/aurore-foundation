@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Version>$(AspNetCoreVersion)</Version>
+        <AssemblyName>Aurore.Foundation.AspNetCore</AssemblyName>
+        <RootNamespace>Aurore.Foundation.AspNetCore</RootNamespace>
+        <Product>Aurore Foundation @ AspNetCore</Product>
+        <Description>ASP.NET Core extensions and utilities for aurore projects.</Description>
+        <PackageTags>aurore aspnetcore extensions utilities helpers</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Http" Version="10.0.0" />
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="10.0.0" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.10" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.8.0" />
+        <PackageReference Include="Scalar.AspNetCore.Microsoft" Version="2.16.16" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Core\Core.csproj" />
+        <ProjectReference Include="..\OpenTelemetry\OpenTelemetry.csproj" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <NuGetAudit>false</NuGetAudit>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Tests.AspNetCore" />
+    </ItemGroup>
+
+</Project>
