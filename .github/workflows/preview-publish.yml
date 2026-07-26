@@ -1,0 +1,62 @@
+name: Publish preview package
+
+# Pick the branch from the "Run workflow" dropdown — no separate input needed for it.
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Which package to publish a preview build of
+        required: true
+        type: choice
+        options:
+          - Core
+          - AspNetCore
+          - EntityFrameworkCore
+          - OpenTelemetry
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute preview version
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE_VERSION="$(grep -oP "(?<=<${{ inputs.package }}Version>)[^<]+" Versions.props)"
+          TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
+          SHORT_SHA="$(git rev-parse --short HEAD)"
+          echo "preview-version=$BASE_VERSION-preview.$TIMESTAMP.$SHORT_SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Build
+        run: dotnet build "src/${{ inputs.package }}/${{ inputs.package }}.csproj" --configuration Release
+
+      - name: Test
+        run: dotnet test "tests/Tests.${{ inputs.package }}" --configuration Release
+
+      - name: Pack
+        run: >
+          dotnet pack "src/${{ inputs.package }}/${{ inputs.package }}.csproj" --configuration Release
+          --output ./nupkg -p:Version=${{ steps.version.outputs.preview-version }}
+
+      - name: Publish
+        run: |
+          dotnet nuget push "./nupkg/*.nupkg" \
+            --api-key "${{ secrets.ARTIFACTS_SECRET }}" \
+            --source https://nuget.pkg.github.com/murilosdv/index.json \
+            --skip-duplicate
+
+      - name: Summary
+        run: |
+          echo "Published preview **${{ inputs.package }} ${{ steps.version.outputs.preview-version }}** from \`${{ github.ref_name }}\`." >> "$GITHUB_STEP_SUMMARY"

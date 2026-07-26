@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Version>$(EntityFrameworkCoreVersion)</Version>
+        <AssemblyName>Aurore.Foundation.EntityFrameworkCore</AssemblyName>
+        <RootNamespace>Aurore.Foundation.EntityFrameworkCore</RootNamespace>
+        <Product>Aurore Foundation @ EntityFrameworkCore</Product>
+        <Description>Entity Framework Core extensions and utilities for aurore projects.</Description>
+        <PackageTags>aurore entityframeworkcore extensions utilities helpers</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="10.0.10" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core\Core.csproj" />
+    </ItemGroup>
+
+</Project>

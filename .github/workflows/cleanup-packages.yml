@@ -1,0 +1,103 @@
+name: Cleanup old package versions
+
+# Manual trigger. This will actually DELETE the pacakges, use carefully.
+on:
+  workflow_dispatch:
+    inputs:
+      keep-count:
+        description: Versions to keep per package, per channel (stable and preview counted separately)
+        required: false
+        default: "10"
+        type: string
+      dry-run:
+        description: List what would be deleted without actually doing it
+        required: false
+        default: true
+        type: boolean
+
+env:
+  GITHUB_OWNER: murilosdv
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  cleanup:
+    strategy:
+      fail-fast: false
+      matrix:
+        package-id:
+          - Aurore.Foundation.Core
+          - Aurore.Foundation.AspNetCore
+          - Aurore.Foundation.EntityFrameworkCore
+          - Aurore.Foundation.OpenTelemetry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine versions to delete
+        id: plan
+        env:
+          TOKEN: ${{ secrets.ARTIFACTS_SECRET }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          PACKAGE_ID="${{ matrix.package-id }}"
+          KEEP="${{ inputs.keep-count }}"
+
+          PAGES_FILE="$(mktemp)"
+          PAGE=1
+          while :; do
+            RESPONSE="$(curl -sf \
+              -H "Authorization: Bearer $TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/users/$GITHUB_OWNER/packages/nuget/$PACKAGE_ID/versions?per_page=100&page=$PAGE")"
+            COUNT="$(echo "$RESPONSE" | jq 'length')"
+            [ "$COUNT" -eq 0 ] && break
+            echo "$RESPONSE" >> "$PAGES_FILE"
+            [ "$COUNT" -lt 100 ] && break
+            PAGE=$((PAGE + 1))
+          done
+
+          ALL_VERSIONS="$(jq -s 'add // []' "$PAGES_FILE")"
+
+          # Newest first per channel, by creation date; anything past $KEEP gets removed.
+          STABLE_REMOVE="$(echo "$ALL_VERSIONS" | jq -r --argjson keep "$KEEP" '
+            [.[] | select(.name | contains("-") | not)] | sort_by(.created_at) | reverse | .[$keep:] | .[] | "\(.id) \(.name)"
+          ')"
+          PREVIEW_REMOVE="$(echo "$ALL_VERSIONS" | jq -r --argjson keep "$KEEP" '
+            [.[] | select(.name | contains("-"))] | sort_by(.created_at) | reverse | .[$keep:] | .[] | "\(.id) \(.name)"
+          ')"
+
+          {
+            echo "to-remove<<VERSIONS_EOF"
+            echo "$STABLE_REMOVE"
+            echo "$PREVIEW_REMOVE"
+            echo "VERSIONS_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Delete old versions
+        env:
+          TOKEN: ${{ secrets.ARTIFACTS_SECRET }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          PACKAGE_ID="${{ matrix.package-id }}"
+          DRY_RUN="${{ inputs.dry-run }}"
+
+          while IFS= read -r LINE; do
+            [ -z "$LINE" ] && continue
+            VERSION_ID="${LINE%% *}"
+            VERSION_NAME="${LINE#* }"
+
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "Would delete $PACKAGE_ID $VERSION_NAME (id $VERSION_ID)" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "Deleting $PACKAGE_ID $VERSION_NAME (id $VERSION_ID)"
+              curl -sf -X DELETE \
+                -H "Authorization: Bearer $TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "https://api.github.com/users/$GITHUB_OWNER/packages/nuget/$PACKAGE_ID/versions/$VERSION_ID"
+              echo "Deleted $PACKAGE_ID $VERSION_NAME (id $VERSION_ID)" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done <<< "${{ steps.plan.outputs.to-remove }}"

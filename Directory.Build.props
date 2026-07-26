@@ -1,0 +1,46 @@
+<Project>
+    <Import Project="$(MSBuildThisFileDirectory)Versions.props" />
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+
+        <!-- Language Settings -->
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+
+        <!-- Company Information -->
+        <Authors>Aurore Development</Authors>
+        <Company>AuroreLabs</Company>
+        <Copyright>AuroreLabs</Copyright>
+
+        <!-- NuGet Packaging -->
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/murilosdv/aurore-foundation</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/murilosdv/aurore-foundation</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    </PropertyGroup>
+
+    <!-- Auto-detect test projects by path pattern -->
+    <PropertyGroup Condition="$(MSBuildProjectDirectory.Contains('\tests\')) Or $(MSBuildProjectDirectory.Contains('/tests/'))">
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <!-- Source projects (non-test) -->
+    <PropertyGroup Condition="'$(IsTestProject)' != 'true'">
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <!-- Test projects -->
+    <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+        <IsPackable>false</IsPackable>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <!-- MTP code coverage extension, only for actual xunit test apps (not Tests.Shared, which
+         overrides IsTestProject back to false since it has no tests of its own). -->
+    <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+        <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.9.0" />
+    </ItemGroup>
+</Project>

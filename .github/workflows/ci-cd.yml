@@ -1,0 +1,89 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      skip-version-sync:
+        description: Bypass the "src + Versions.props must change together" check for this run (one-off fixes, e.g. correcting a version number after the fact)
+        required: false
+        default: false
+        type: boolean
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Build, test & publish
+    strategy:
+      fail-fast: false
+      matrix:
+        package-name: [Core, AspNetCore, EntityFrameworkCore, OpenTelemetry]
+    uses: ./.github/workflows/package-pipeline.yml
+    with:
+      package-name: ${{ matrix.package-name }}
+      base-sha: ${{ github.event.before }}
+      head-sha: ${{ github.sha }}
+      skip-version-sync: ${{ inputs.skip-version-sync || false }}
+    secrets:
+      ARTIFACTS_SECRET: ${{ secrets.ARTIFACTS_SECRET }}
+
+  release:
+    name: Create combined release
+    needs: publish
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download publish results
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          pattern: release-info-*
+          path: release-info
+          merge-multiple: true
+
+      - name: Create combined release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          if [ ! -d release-info ] || [ -z "$(ls -A release-info 2>/dev/null)" ]; then
+            echo "Nothing was published in this run — no packages changed, or all failed before publishing." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          TAG="release-$(git rev-parse --short HEAD)"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists, skipping (likely a re-run of a completed publish)."
+            exit 0
+          fi
+
+          PACKAGE_LIST="$(jq -s -r 'map("\(.package) v\(.version)") | join(", ")' release-info/*.json)"
+
+          NOTES="$(awk '/^## \[Unreleased\]/{flag=1; next} /^## \[/{if (flag) exit} flag' CHANGELOG.md | sed '/^---$/d')"
+          if [ -z "$(echo "$NOTES" | tr -d '[:space:]')" ]; then
+            NOTES="No changelog entry was found under **Unreleased** at release time. See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for the latest notes."
+          fi
+
+          {
+            echo "$NOTES"
+            echo ""
+            echo "---"
+            echo "Published: $PACKAGE_LIST"
+            echo "Commit: ${{ github.sha }}"
+          } > release-notes.md
+
+          gh release create "$TAG" \
+            --title "Release: $PACKAGE_LIST" \
+            --notes-file release-notes.md \
+            --target "${{ github.sha }}"

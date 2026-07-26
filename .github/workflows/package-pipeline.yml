@@ -1,0 +1,120 @@
+name: Package pipeline
+
+on:
+  workflow_call:
+    inputs:
+      package-name:
+        description: Package name, matching the tests/Tests.<name> convention (e.g. "Core", "AspNetCore").
+        required: true
+        type: string
+      base-sha:
+        description: Commit SHA before the change, used to diff what changed.
+        required: true
+        type: string
+      head-sha:
+        description: Commit SHA being built.
+        required: true
+        type: string
+      publish:
+        description: Whether to pack and publish to the GitHub Packages NuGet feed after a successful build/test. False for PR checks.
+        required: false
+        type: boolean
+        default: true
+      collect-coverage:
+        description: Whether to collect code coverage and append a summary to the job (informational only, never gates the job).
+        required: false
+        type: boolean
+        default: false
+      skip-version-sync:
+        description: Bypass the "src + Versions.props must change together" check. For one-off fixes (e.g. correcting a version number after the fact) — only ever set via ci-cd.yml's manual workflow_dispatch input, never on a normal push.
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      ARTIFACTS_SECRET:
+        description: Classic PAT with write:packages scope. Only required when publish is true.
+        required: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  run:
+    name: ${{ inputs.package-name }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check package/version sync
+        id: changes
+        uses: ./.github/actions/check-version-sync
+        with:
+          package-name: ${{ inputs.package-name }}
+          project-path: src/${{ inputs.package-name }}/${{ inputs.package-name }}.csproj
+          version-property: ${{ inputs.package-name }}Version
+          base-sha: ${{ inputs.base-sha }}
+          head-sha: ${{ inputs.head-sha }}
+          skip-check: ${{ inputs.skip-version-sync }}
+
+      - name: Setup .NET
+        if: steps.changes.outputs.src-changed == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Build
+        if: steps.changes.outputs.src-changed == 'true'
+        run: dotnet build "src/${{ inputs.package-name }}/${{ inputs.package-name }}.csproj" --configuration Release
+
+      - name: Test
+        if: steps.changes.outputs.src-changed == 'true' && inputs.collect-coverage != true
+        run: dotnet test "tests/Tests.${{ inputs.package-name }}" --configuration Release
+
+      - name: Test with coverage
+        if: steps.changes.outputs.src-changed == 'true' && inputs.collect-coverage == true
+        run: |
+          dotnet test "tests/Tests.${{ inputs.package-name }}" --configuration Release \
+            --coverage --coverage-output-format cobertura --coverage-output "${{ inputs.package-name }}.cobertura.xml"
+
+      - name: Summarize coverage
+        if: steps.changes.outputs.src-changed == 'true' && inputs.collect-coverage == true
+        run: |
+          COVERAGE_FILE=$(find . -name "${{ inputs.package-name }}.cobertura.xml" -print -quit)
+          if [ -z "$COVERAGE_FILE" ]; then
+            echo "No coverage file produced for ${{ inputs.package-name }}." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          dotnet tool install -g dotnet-reportgenerator-globaltool --version 5.* > /dev/null
+          reportgenerator "-reports:$COVERAGE_FILE" "-targetdir:coverage-report" -reporttypes:MarkdownSummaryGithub
+          {
+            echo "### ${{ inputs.package-name }} coverage (informational only)"
+            cat coverage-report/SummaryGithub.md
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Pack
+        if: steps.changes.outputs.src-changed == 'true' && inputs.publish == true
+        run: dotnet pack "src/${{ inputs.package-name }}/${{ inputs.package-name }}.csproj" --configuration Release --output ./nupkg
+
+      - name: Publish
+        if: steps.changes.outputs.src-changed == 'true' && inputs.publish == true
+        run: |
+          dotnet nuget push "./nupkg/*.nupkg" \
+            --api-key "${{ secrets.ARTIFACTS_SECRET }}" \
+            --source https://nuget.pkg.github.com/murilosdv/index.json \
+            --skip-duplicate
+
+      - name: Record publish result
+        if: steps.changes.outputs.src-changed == 'true' && inputs.publish == true
+        run: |
+          mkdir -p release-info
+          echo '{"package":"${{ inputs.package-name }}","version":"${{ steps.changes.outputs.version }}"}' > "release-info/${{ inputs.package-name }}.json"
+
+      - name: Upload publish result
+        if: steps.changes.outputs.src-changed == 'true' && inputs.publish == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-info-${{ inputs.package-name }}
+          path: release-info/${{ inputs.package-name }}.json
