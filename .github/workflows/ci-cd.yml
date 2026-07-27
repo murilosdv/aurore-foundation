@@ -60,9 +60,7 @@ jobs:
 
           OLD_VERSIONS_PROPS="$(git show "$BEFORE_SHA:Versions.props" 2>/dev/null || echo "")"
 
-          # Only packages whose version property actually changed go in the release — a
-          # package bumped in a previous release doesn't get re-announced just because
-          # some other package changed in this one.
+          # Only packages whose version property actually changed go in the release.
           PACKAGE_LIST=""
           for PACKAGE in Core AspNetCore EntityFrameworkCore OpenTelemetry; do
             OLD_VERSION="$(echo "$OLD_VERSIONS_PROPS" | grep -oP "(?<=<${PACKAGE}Version>)[^<]+" || echo "")"

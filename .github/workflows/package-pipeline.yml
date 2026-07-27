@@ -88,9 +88,7 @@ jobs:
             exit 0
           fi
           dotnet tool install -g dotnet-reportgenerator-globaltool --version 5.* > /dev/null
-          # Class filters exclude compiler/source-generator-emitted types with no source file to tag [ExcludeFromCodeCoverage]
-          # on (C# 13 `extension(...)` block runtime support types, the OpenApi XML-doc source generator's output) - kept in
-          # sync with the Dockerfile's inlined run-tests.sh reportgenerator call so local and CI numbers agree.
+          # Excluding source generated files and other unnecessary files
           reportgenerator "-reports:$COVERAGE_FILE" "-targetdir:test-results/report" -reporttypes:MarkdownSummaryGithub "-classfilters:-Microsoft.AspNetCore.OpenApi.Generated;-System.Runtime.CompilerServices"
           {
             echo "### ${{ inputs.package-name }} coverage (informational only)"
