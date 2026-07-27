@@ -1,7 +1,7 @@
 using System;
 using Aurore.Foundation.Core.Extensions;
 
-namespace Tests.Core.Extensions;
+namespace Aurore.Foundation.Tests.Core.Extensions;
 
 public class StringExtensionsTests
 {
@@ -139,5 +139,18 @@ public class StringExtensionsTests
 
         // Assert
         Assert.Equal(value, result);
+    }
+
+    [Fact(DisplayName = "RemoveDiacritics maps the remaining special Latin characters not covered by the accented-letter test")]
+    public void RemoveDiacriticsMapsRemainingSpecialCharacters()
+    {
+        // Arrange
+        var value = "Æ æ Ð ð Þ Ł";
+
+        // Act
+        var result = value.RemoveDiacritics();
+
+        // Assert
+        Assert.Equal("Æ æ D d T L", result);
     }
 }

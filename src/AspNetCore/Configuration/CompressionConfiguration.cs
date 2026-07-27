@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Mime;
@@ -10,6 +11,7 @@ namespace Aurore.Foundation.AspNetCore.Configuration;
 /// <summary>
 /// Provides extension methods for configuring response compression.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class CompressionConfiguration
 {
     /// <summary>

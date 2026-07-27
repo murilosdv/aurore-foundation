@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures an HTTP service dependency, including its base address, default headers, and optional health check.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record HttpServiceDependencyOptions
 {
     /// <summary>

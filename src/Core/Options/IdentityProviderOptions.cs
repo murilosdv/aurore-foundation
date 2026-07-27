@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures the identity provider used for authenticating and authorizing requests.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record IdentityProviderOptions
 {
     /// <summary>

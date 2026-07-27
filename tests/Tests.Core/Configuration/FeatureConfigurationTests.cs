@@ -5,7 +5,7 @@ using Aurore.Foundation.Core.Configuration;
 using Aurore.Foundation.Core.Results;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests.Core.Configuration;
+namespace Aurore.Foundation.Tests.Core.Configuration;
 
 public class FeatureConfigurationTests
 {

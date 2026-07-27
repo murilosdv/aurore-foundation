@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
-namespace Tests.AspNetCore.Extensions;
+namespace Aurore.Foundation.Tests.AspNetCore.Extensions;
 
 public class TypedResultExtensionsTests
 {

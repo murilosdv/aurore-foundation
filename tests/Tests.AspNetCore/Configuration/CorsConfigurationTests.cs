@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Tests.AspNetCore.Configuration;
+namespace Aurore.Foundation.Tests.AspNetCore.Configuration;
 
 public class CorsConfigurationTests
 {

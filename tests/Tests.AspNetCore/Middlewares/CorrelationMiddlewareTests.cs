@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using Aurore.Foundation.AspNetCore.Middlewares;
 using Aurore.Foundation.Core.Constants;
 using Aurore.Foundation.Core.Contexts;
+using Aurore.Foundation.TestBed.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Tests.Shared.Http;
 
-namespace Tests.AspNetCore.Middlewares;
+namespace Aurore.Foundation.Tests.AspNetCore.Middlewares;
 
 public class CorrelationMiddlewareTests
 {

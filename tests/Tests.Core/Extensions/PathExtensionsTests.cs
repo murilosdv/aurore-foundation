@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Aurore.Foundation.Core.Extensions;
 
-namespace Tests.Core.Extensions;
+namespace Aurore.Foundation.Tests.Core.Extensions;
 
 public class PathExtensionsTests
 {

@@ -1,7 +1,7 @@
 using Aurore.Foundation.Core.Extensions;
 using Aurore.Foundation.Core.Options;
 
-namespace Tests.Core.Extensions;
+namespace Aurore.Foundation.Tests.Core.Extensions;
 
 public class ConnectionStringOptionsExtensionsTests
 {

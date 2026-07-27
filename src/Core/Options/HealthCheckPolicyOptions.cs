@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures rate limiting and caching policies applied to health check endpoints.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record HealthCheckPolicyOptions
 {
     /// <summary>

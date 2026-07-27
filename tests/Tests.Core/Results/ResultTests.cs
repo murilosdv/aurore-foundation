@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Aurore.Foundation.Core.Errors;
 using Aurore.Foundation.Core.Results;
 
-namespace Tests.Core.Results;
+namespace Aurore.Foundation.Tests.Core.Results;
 
 public class ResultTests
 {

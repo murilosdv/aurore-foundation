@@ -1,6 +1,6 @@
 using Aurore.Foundation.Core.Security;
 
-namespace Tests.Core.Security;
+namespace Aurore.Foundation.Tests.Core.Security;
 
 /// <summary>
 /// Calls the process-wide, call-once <see cref="Obfuscator.Configure"/> a single time for <see cref="ObfuscatorTests"/>,
