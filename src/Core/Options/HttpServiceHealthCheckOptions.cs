@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures how a dependent HTTP service's health is checked.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record HttpServiceHealthCheckOptions
 {
     /// <summary>

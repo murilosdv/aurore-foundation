@@ -1,8 +1,8 @@
 <Project>
     <PropertyGroup>
-        <CoreVersion>0.1.0</CoreVersion>
-        <AspNetCoreVersion>0.1.0</AspNetCoreVersion>
-        <EntityFrameworkCoreVersion>0.1.0</EntityFrameworkCoreVersion>
-        <OpenTelemetryVersion>0.1.0</OpenTelemetryVersion>
+        <CoreVersion>0.1.1</CoreVersion>
+        <AspNetCoreVersion>0.1.1</AspNetCoreVersion>
+        <EntityFrameworkCoreVersion>0.1.1</EntityFrameworkCoreVersion>
+        <OpenTelemetryVersion>0.1.1</OpenTelemetryVersion>
     </PropertyGroup>
 </Project>

@@ -1,6 +1,6 @@
 using Aurore.Foundation.Core.Errors;
 
-namespace Tests.Core.Errors;
+namespace Aurore.Foundation.Tests.Core.Errors;
 
 public class ApplicationErrorTests
 {

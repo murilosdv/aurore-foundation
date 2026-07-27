@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures whether the application is operating in maintenance mode and how it communicates that to callers.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record MaintenanceModeOptions
 {
     /// <summary>

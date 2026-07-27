@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Aurore.Foundation.Core.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ namespace Aurore.Foundation.AspNetCore.Configuration;
 /// <summary>
 /// Provides extension methods for configuring JSON serialization defaults.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class SerializationConfiguration
 {
     /// <summary>

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Aurore.Foundation.Core.Contexts;
 using Aurore.Foundation.Core.Options;
 using Microsoft.AspNetCore.Builder;
@@ -15,6 +16,7 @@ public static class MiddlewareConfiguration
     /// </summary>
     /// <param name="services">The service collection to configure.</param>
     /// <returns>The <see cref="IServiceCollection"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IServiceCollection AddCorrelationContext(this IServiceCollection services)
     {
         return services
@@ -27,6 +29,7 @@ public static class MiddlewareConfiguration
     /// </summary>
     /// <param name="builder">The application builder to configure.</param>
     /// <returns>The <see cref="IApplicationBuilder"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IApplicationBuilder UseCorrelationContext(this IApplicationBuilder builder)
     {
         return builder
@@ -38,6 +41,7 @@ public static class MiddlewareConfiguration
     /// </summary>
     /// <param name="builder">The application builder to configure.</param>
     /// <returns>The <see cref="IApplicationBuilder"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IApplicationBuilder UseRequestEnricher(this IApplicationBuilder builder)
     {
         return builder
@@ -49,6 +53,7 @@ public static class MiddlewareConfiguration
     /// </summary>
     /// <param name="builder">The application builder to configure.</param>
     /// <returns>The <see cref="IApplicationBuilder"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IApplicationBuilder UseRequestBodySizeLimit(this IApplicationBuilder builder)
     {
         return builder
@@ -80,6 +85,7 @@ public static class MiddlewareConfiguration
     /// </summary>
     /// <param name="builder">The application builder to configure.</param>
     /// <returns>The <see cref="IApplicationBuilder"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IApplicationBuilder UseMaintenanceMode(this IApplicationBuilder builder)
     {
         return builder

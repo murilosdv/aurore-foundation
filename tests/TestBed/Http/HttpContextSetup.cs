@@ -3,7 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests.Shared.Http;
+namespace Aurore.Foundation.TestBed.Http;
 
 /// <summary>
 /// A fluent setup helper for a <see cref="DefaultHttpContext"/> pre-wired with a service provider (logging

@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures a named Cross-Origin Resource Sharing (CORS) policy.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record CorsPolicyOptions
 {
     /// <summary>

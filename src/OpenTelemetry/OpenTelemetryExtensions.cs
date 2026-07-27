@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using Aurore.Foundation.Core.Extensions;
@@ -34,6 +35,7 @@ public static class OpenTelemetryExtensions
     /// <param name="activitySourceName">The name of the application's own <see cref="System.Diagnostics.ActivitySource"/> to subscribe to for tracing.</param>
     /// <param name="environmentName">The name of the deployment environment, recorded as the <c>deployment.environment</c> resource attribute.</param>
     /// <returns>The same <paramref name="services"/> instance, to allow chaining.</returns>
+    [ExcludeFromCodeCoverage]
     public static IServiceCollection AddDefaultOpenTelemetry(
        this IServiceCollection services,
        AppInfoOptions appInfo,
@@ -98,11 +100,13 @@ public static class OpenTelemetryExtensions
     /// </summary>
     /// <param name="builder">The application builder to map the endpoint on.</param>
     /// <returns>The same <paramref name="builder"/> instance, to allow chaining.</returns>
+    [ExcludeFromCodeCoverage]
     public static IApplicationBuilder UseDefaultPrometheusEndpoint(this IApplicationBuilder builder)
     {
         return builder.UseOpenTelemetryPrometheusScrapingEndpoint(OpenTelemetryProperties.Endpoints.Metrics);
     }
 
+    [ExcludeFromCodeCoverage]
     private static void ConfigureOtlpExporter(OtlpExporterOptions options, OpenTelemetryOptions settings)
     {
         options.Endpoint = new Uri(settings.CollectorEndpoint);

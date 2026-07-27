@@ -1,7 +1,7 @@
 using Aurore.Foundation.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Http;
 
-namespace Tests.AspNetCore.Extensions;
+namespace Aurore.Foundation.Tests.AspNetCore.Extensions;
 
 public class HttpContextExtensionsTests
 {

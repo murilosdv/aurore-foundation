@@ -1,6 +1,6 @@
 using Aurore.Foundation.Core.Pagination;
 
-namespace Tests.Core.Pagination;
+namespace Aurore.Foundation.Tests.Core.Pagination;
 
 public class OffsetPageTests
 {

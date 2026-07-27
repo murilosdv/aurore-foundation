@@ -2,7 +2,7 @@ using System.Linq;
 using Aurore.Foundation.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tests.EntityFrameworkCore.Extensions;
+namespace Aurore.Foundation.Tests.EntityFrameworkCore.Extensions;
 
 public class ModelBuilderExtensionsTests
 {

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Aurore.Foundation.Core.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ public static class RequestPipelineConfiguration
     /// <param name="services">The service collection to configure.</param>
     /// <param name="options">The request timeout settings.</param>
     /// <returns>The <see cref="IServiceCollection"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IServiceCollection AddRequestTimeouts(this IServiceCollection services, RequestTimeoutOptions options)
     {
         return services.AddRequestTimeouts(o =>
@@ -31,6 +33,7 @@ public static class RequestPipelineConfiguration
     /// <param name="services">The service collection to configure.</param>
     /// <param name="options">The request body size settings.</param>
     /// <returns>The <see cref="IServiceCollection"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IServiceCollection AddRequestBodySizeLimit(this IServiceCollection services, RequestBodySizeOptions options)
     {
         return services.AddSingleton(options);
@@ -65,6 +68,7 @@ public static class RequestPipelineConfiguration
     /// <param name="services">The service collection to configure.</param>
     /// <param name="options">The connection and request limits to apply.</param>
     /// <returns>The <see cref="IServiceCollection"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IServiceCollection AddKestrelLimits(this IServiceCollection services, KestrelLimitsOptions options)
     {
         return services.Configure<Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions>(o =>

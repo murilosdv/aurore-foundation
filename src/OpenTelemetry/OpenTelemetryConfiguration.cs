@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Aurore.Foundation.Core.Extensions;
 using Aurore.Foundation.Core.Options;
 using Humanizer;
@@ -13,6 +14,7 @@ namespace Aurore.Foundation.OpenTelemetry;
 /// <summary>
 /// Provides an extension method for wiring OpenTelemetry-based logging into an <see cref="IHostApplicationBuilder"/>.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class OpenTelemetryConfiguration
 {
     /// <summary>

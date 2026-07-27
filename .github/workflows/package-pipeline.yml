@@ -77,21 +77,24 @@ jobs:
         if: steps.changes.outputs.src-changed == 'true' && inputs.collect-coverage == true
         run: |
           dotnet test "tests/Tests.${{ inputs.package-name }}" --configuration Release \
-            --coverage --coverage-output-format cobertura --coverage-output "${{ inputs.package-name }}.cobertura.xml"
+            --results-directory test-results --coverage --coverage-output-format cobertura --coverage-output "${{ inputs.package-name }}.cobertura.xml"
 
       - name: Summarize coverage
         if: steps.changes.outputs.src-changed == 'true' && inputs.collect-coverage == true
         run: |
-          COVERAGE_FILE=$(find . -name "${{ inputs.package-name }}.cobertura.xml" -print -quit)
-          if [ -z "$COVERAGE_FILE" ]; then
+          COVERAGE_FILE="test-results/${{ inputs.package-name }}.cobertura.xml"
+          if [ ! -f "$COVERAGE_FILE" ]; then
             echo "No coverage file produced for ${{ inputs.package-name }}." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           dotnet tool install -g dotnet-reportgenerator-globaltool --version 5.* > /dev/null
-          reportgenerator "-reports:$COVERAGE_FILE" "-targetdir:coverage-report" -reporttypes:MarkdownSummaryGithub
+          # Class filters exclude compiler/source-generator-emitted types with no source file to tag [ExcludeFromCodeCoverage]
+          # on (C# 13 `extension(...)` block runtime support types, the OpenApi XML-doc source generator's output) - kept in
+          # sync with the Dockerfile's inlined run-tests.sh reportgenerator call so local and CI numbers agree.
+          reportgenerator "-reports:$COVERAGE_FILE" "-targetdir:test-results/report" -reporttypes:MarkdownSummaryGithub "-classfilters:-Microsoft.AspNetCore.OpenApi.Generated;-System.Runtime.CompilerServices"
           {
             echo "### ${{ inputs.package-name }} coverage (informational only)"
-            cat coverage-report/SummaryGithub.md
+            cat test-results/report/SummaryGithub.md
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Pack

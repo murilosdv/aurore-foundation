@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace Tests.Shared.Http;
+namespace Aurore.Foundation.TestBed.Http;
 
 /// <summary>
 /// A minimal <see cref="IHttpResponseFeature"/> that captures the callback registered via <see cref="OnStarting"/>

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Aurore.Foundation.Core.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ namespace Aurore.Foundation.AspNetCore.Filters;
 /// <summary>
 /// Provides extension methods for registering and applying endpoint validation and idempotency filters.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class FilterConfiguration
 {
     /// <summary>

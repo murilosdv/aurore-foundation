@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures idempotency key handling for incoming requests.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record IdempotencyOptions
 {
     /// <summary>
