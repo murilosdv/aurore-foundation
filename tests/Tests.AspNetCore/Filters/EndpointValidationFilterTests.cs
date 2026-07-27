@@ -20,7 +20,10 @@ public class EndpointValidationFilterTests
         }
     }
 
-    private static EndpointFilterDelegate Next(object? result) => _ => ValueTask.FromResult(result);
+    private static EndpointFilterDelegate Next(object? result)
+    {
+        return _ => ValueTask.FromResult(result);
+    }
 
     [Fact(DisplayName = "InvokeAsync calls the next delegate when all validated arguments are valid")]
     public async Task CallsNextWhenArgumentsAreValid()
