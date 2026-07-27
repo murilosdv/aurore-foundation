@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Aurore.Foundation.Core.Serialization;
 
-namespace Tests.Core.Serialization;
+namespace Aurore.Foundation.Tests.Core.Serialization;
 
 public class JsonSerializerConfigurationTests
 {

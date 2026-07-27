@@ -5,10 +5,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Aurore.Foundation.AspNetCore.HealthChecks;
 using Aurore.Foundation.Core.Constants;
+using Aurore.Foundation.TestBed.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Tests.Shared.Http;
 
-namespace Tests.AspNetCore.HealthChecks;
+namespace Aurore.Foundation.Tests.AspNetCore.HealthChecks;
 
 public class SimplifiedHealthCheckReadinessReportTests
 {

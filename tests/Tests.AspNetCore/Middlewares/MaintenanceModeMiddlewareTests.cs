@@ -3,11 +3,11 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Aurore.Foundation.AspNetCore.Middlewares;
 using Aurore.Foundation.Core.Options;
+using Aurore.Foundation.TestBed.Fakes;
+using Aurore.Foundation.TestBed.Http;
 using Microsoft.AspNetCore.Http;
-using Tests.Shared.Fakes;
-using Tests.Shared.Http;
 
-namespace Tests.AspNetCore.Middlewares;
+namespace Aurore.Foundation.Tests.AspNetCore.Middlewares;
 
 public class MaintenanceModeMiddlewareTests
 {

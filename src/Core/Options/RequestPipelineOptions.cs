@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Aggregates the options that configure the HTTP request processing pipeline.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record RequestPipelineOptions
 {
     /// <summary>

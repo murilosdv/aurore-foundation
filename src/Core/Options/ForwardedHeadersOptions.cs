@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures the trusted proxies and networks allowed to set forwarded headers (e.g. <c>X-Forwarded-For</c>).
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record ForwardedHeadersOptions
 {
     /// <summary>

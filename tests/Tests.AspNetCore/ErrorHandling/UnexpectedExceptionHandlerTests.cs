@@ -4,10 +4,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Aurore.Foundation.AspNetCore.ErrorHandling;
 using Aurore.Foundation.Core.Errors;
+using Aurore.Foundation.TestBed.Http;
 using Microsoft.Extensions.Logging.Abstractions;
-using Tests.Shared.Http;
 
-namespace Tests.AspNetCore.ErrorHandling;
+namespace Aurore.Foundation.Tests.AspNetCore.ErrorHandling;
 
 public class UnexpectedExceptionHandlerTests
 {

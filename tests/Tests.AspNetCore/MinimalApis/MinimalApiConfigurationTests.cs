@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Tests.AspNetCore.MinimalApis;
+namespace Aurore.Foundation.Tests.AspNetCore.MinimalApis;
 
 public class MinimalApiConfigurationTests
 {

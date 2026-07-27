@@ -41,14 +41,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Download publish results
-        uses: actions/download-artifact@v4
-        continue-on-error: true
         with:
-          pattern: release-info-*
-          path: release-info
-          merge-multiple: true
+          fetch-depth: 0
 
       - name: Create combined release
         env:
@@ -56,8 +50,30 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [ ! -d release-info ] || [ -z "$(ls -A release-info 2>/dev/null)" ]; then
-            echo "Nothing was published in this run — no packages changed, or all failed before publishing." >> "$GITHUB_STEP_SUMMARY"
+          BEFORE_SHA="${{ github.event.before }}"
+          ZERO_SHA="0000000000000000000000000000000000000000"
+          EMPTY_TREE="4b825dc642cb6eb9a060e54bf8d69288fbee4904"
+
+          if [ -z "$BEFORE_SHA" ] || [ "$BEFORE_SHA" = "$ZERO_SHA" ] || ! git cat-file -e "$BEFORE_SHA" 2>/dev/null; then
+            BEFORE_SHA="$(git rev-parse "${{ github.sha }}^" 2>/dev/null || echo "$EMPTY_TREE")"
+          fi
+
+          OLD_VERSIONS_PROPS="$(git show "$BEFORE_SHA:Versions.props" 2>/dev/null || echo "")"
+
+          # Only packages whose version property actually changed go in the release.
+          PACKAGE_LIST=""
+          for PACKAGE in Core AspNetCore EntityFrameworkCore OpenTelemetry; do
+            OLD_VERSION="$(echo "$OLD_VERSIONS_PROPS" | grep -oP "(?<=<${PACKAGE}Version>)[^<]+" || echo "")"
+            NEW_VERSION="$(grep -oP "(?<=<${PACKAGE}Version>)[^<]+" Versions.props)"
+
+            if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
+              PACKAGE_LIST="${PACKAGE_LIST}${PACKAGE} v${NEW_VERSION}, "
+            fi
+          done
+          PACKAGE_LIST="${PACKAGE_LIST%, }"
+
+          if [ -z "$PACKAGE_LIST" ]; then
+            echo "No package versions changed in this push, skipping release." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
 
@@ -67,8 +83,6 @@ jobs:
             echo "Release $TAG already exists, skipping (likely a re-run of a completed publish)."
             exit 0
           fi
-
-          PACKAGE_LIST="$(jq -s -r 'map("\(.package) v\(.version)") | join(", ")' release-info/*.json)"
 
           NOTES="$(awk '/^## \[Unreleased\]/{flag=1; next} /^## \[/{if (flag) exit} flag' CHANGELOG.md | sed '/^---$/d')"
           if [ -z "$(echo "$NOTES" | tr -d '[:space:]')" ]; then

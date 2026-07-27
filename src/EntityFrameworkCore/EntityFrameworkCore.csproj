@@ -18,4 +18,8 @@
       <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Tests.EntityFrameworkCore" />
+    </ItemGroup>
+
 </Project>

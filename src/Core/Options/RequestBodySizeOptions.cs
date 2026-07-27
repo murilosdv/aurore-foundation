@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures the maximum allowed size of an incoming request body.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record RequestBodySizeOptions
 {
     /// <summary>

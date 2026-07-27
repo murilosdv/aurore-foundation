@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+**/.vs/
+.git/
+.claude/
+test-results/
+nupkg/
+*.user

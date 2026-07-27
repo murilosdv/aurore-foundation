@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures the identity presented by a service's health check endpoint.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record HealthCheckEndpointOptions
 {
     /// <summary>

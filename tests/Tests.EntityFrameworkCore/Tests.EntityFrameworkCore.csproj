@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <RootNamespace>Tests.EntityFrameworkCore</RootNamespace>
+        <RootNamespace>Aurore.Foundation.Tests.EntityFrameworkCore</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,6 +16,7 @@
     <ItemGroup>
         <PackageReference Include="xunit.v3.mtp-v2" Version="3.2.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.4" />
+        <PackageReference Include="Testcontainers.PostgreSql" Version="4.13.0" />
     </ItemGroup>
 
     <ItemGroup>

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <RootNamespace>Tests.OpenTelemetry</RootNamespace>
+        <RootNamespace>Aurore.Foundation.Tests.OpenTelemetry</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -19,7 +19,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\OpenTelemetry\OpenTelemetry.csproj" />
-        <ProjectReference Include="..\Tests.Shared\Tests.Shared.csproj" />
+        <ProjectReference Include="..\TestBed\TestBed.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ public static class OpenApiExtensions
     /// <param name="services">The service collection to configure.</param>
     /// <param name="versions">The API versions to create documents for.</param>
     /// <returns>The names of the registered documents, in <c>"v{version}"</c> form.</returns>
+    [ExcludeFromCodeCoverage]
     public static string[] ConfigureScalarDocuments(this IServiceCollection services, params int[] versions)
     {
         var documents = versions.Select(v => new ScalarDocument($"v{v}", $"Version {v}"));
@@ -72,6 +74,7 @@ public static class OpenApiExtensions
     /// <param name="apiVersion">The API version to display in the document.</param>
     /// <param name="appInfo">The application metadata (component, description, maintainer) to display.</param>
     /// <returns>The <see cref="OpenApiOptions"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static OpenApiOptions AddAppInfo(
         this OpenApiOptions options, string apiVersion, AppInfoOptions appInfo)
     {
@@ -98,6 +101,7 @@ public static class OpenApiExtensions
     /// </summary>
     /// <param name="options">The OpenAPI options to configure.</param>
     /// <returns>The <see cref="OpenApiOptions"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static OpenApiOptions AddJwtBearerSecurity(this OpenApiOptions options)
     {
         return options.AddSecuritySchemeAndRequirement(new OpenApiSecurityScheme
@@ -117,6 +121,7 @@ public static class OpenApiExtensions
     /// <param name="options">The OpenAPI options to configure.</param>
     /// <param name="identityProvider">The identity provider whose OIDC discovery endpoint is referenced.</param>
     /// <returns>The <see cref="OpenApiOptions"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static OpenApiOptions AddOidcSecurity(this OpenApiOptions options, IdentityProviderOptions identityProvider)
     {
         return options.AddSecuritySchemeAndRequirement(new OpenApiSecurityScheme
@@ -134,6 +139,7 @@ public static class OpenApiExtensions
     /// <param name="options">The OpenAPI options to configure.</param>
     /// <param name="identityProvider">The identity provider whose OAuth2 endpoints and scopes are referenced.</param>
     /// <returns>The <see cref="OpenApiOptions"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static OpenApiOptions AddOAuth2Security(this OpenApiOptions options, IdentityProviderOptions identityProvider)
     {
         var baseUrl = $"{identityProvider.AuthorityUrl}/protocol/openid-connect";

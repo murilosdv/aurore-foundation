@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Tests.AspNetCore.MinimalApis;
+namespace Aurore.Foundation.Tests.AspNetCore.MinimalApis;
 
 public class ResourceGroupTests
 {

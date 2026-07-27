@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 namespace Aurore.Foundation.Core.Logging;
@@ -5,6 +6,7 @@ namespace Aurore.Foundation.Core.Logging;
 /// <summary>
 /// Provides extension members for <see cref="ILoggerFactory"/> to simplify console logging setup.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class LoggingExtensions
 {
     extension(ILoggerFactory factory)
