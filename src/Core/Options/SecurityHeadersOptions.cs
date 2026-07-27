@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures HTTP security response headers.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record SecurityHeadersOptions
 {
     /// <summary>

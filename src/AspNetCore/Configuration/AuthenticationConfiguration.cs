@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Aurore.Foundation.Core.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ namespace Aurore.Foundation.AspNetCore.Configuration;
 /// <summary>
 /// Provides extension methods for configuring JWT bearer authentication and authorization.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class AuthenticationConfiguration
 {
     /// <summary>

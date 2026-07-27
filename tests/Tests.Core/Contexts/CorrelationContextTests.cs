@@ -1,6 +1,6 @@
 using Aurore.Foundation.Core.Contexts;
 
-namespace Tests.Core.Contexts;
+namespace Aurore.Foundation.Tests.Core.Contexts;
 
 public class CorrelationContextTests
 {

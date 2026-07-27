@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Aurore.Foundation.AspNetCore.Extensions;
 using Aurore.Foundation.Core.Constants;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Aurore.Foundation.AspNetCore.Middlewares;
 
+[ExcludeFromCodeCoverage]
 internal sealed class RequestEnricherMiddleware(ILogger<RequestEnricherMiddleware> logger, RequestDelegate next)
 {
     public async Task InvokeAsync(HttpContext context)

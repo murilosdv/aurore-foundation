@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 
-namespace Tests.EntityFrameworkCore.HealthChecks;
+namespace Aurore.Foundation.Tests.EntityFrameworkCore.HealthChecks;
 
 public class PostgresHealthCheckConfigurationTests
 {

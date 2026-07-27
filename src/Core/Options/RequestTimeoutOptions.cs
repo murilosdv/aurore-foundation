@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures the maximum time allowed for processing a request.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record RequestTimeoutOptions
 {
     /// <summary>

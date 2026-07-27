@@ -2,14 +2,14 @@ using System;
 using System.Net.Http;
 using Aurore.Foundation.Core.Options;
 using Aurore.Foundation.OpenTelemetry;
+using Aurore.Foundation.TestBed.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Instrumentation.Http;
-using Tests.Shared.Http;
 
-namespace Tests.OpenTelemetry;
+namespace Aurore.Foundation.Tests.OpenTelemetry;
 
 public class OpenTelemetryExtensionsTests
 {

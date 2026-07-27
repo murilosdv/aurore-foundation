@@ -2,7 +2,7 @@ using Aurore.Foundation.Core.Abstractions;
 using Aurore.Foundation.EntityFrameworkCore.Configuration;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tests.EntityFrameworkCore.Configuration;
+namespace Aurore.Foundation.Tests.EntityFrameworkCore.Configuration;
 
 public class EntityConfigurationBaseTests
 {

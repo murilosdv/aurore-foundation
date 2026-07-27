@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <RootNamespace>Tests.Core</RootNamespace>
+        <RootNamespace>Aurore.Foundation.Tests.Core</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

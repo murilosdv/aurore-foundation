@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Options;
 
-namespace Tests.Shared.Fakes;
+namespace Aurore.Foundation.TestBed.Fakes;
 
 /// <summary>
 /// A minimal <see cref="IOptionsMonitor{TOptions}"/> whose <see cref="CurrentValue"/> is fixed at construction,

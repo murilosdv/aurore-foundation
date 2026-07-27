@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Asp.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,6 +7,7 @@ namespace Aurore.Foundation.AspNetCore.Configuration;
 /// <summary>
 /// Provides extension methods for configuring API versioning.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class VersioningConfiguration
 {
     /// <summary>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.RateLimiting;
 using Aurore.Foundation.Core.Constants;
@@ -35,6 +36,7 @@ public static class HealthCheckConfiguration
     /// <param name="app">The web application to map endpoints on.</param>
     /// <param name="options">The service identity (name, version) and API key used to protect the endpoints.</param>
     /// <returns>The <see cref="WebApplication"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static WebApplication MapHealthCheckEndpoints(this WebApplication app, HealthCheckEndpointOptions options)
     {
         return app
@@ -50,6 +52,7 @@ public static class HealthCheckConfiguration
     /// <param name="permitLimit">The maximum number of requests allowed per window.</param>
     /// <param name="limitSeconds">The length of the rate-limiting window, in seconds.</param>
     /// <returns>The <see cref="IServiceCollection"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IServiceCollection AddHealthCheckRateLimiter(this IServiceCollection services, int permitLimit, int limitSeconds)
     {
         return services
@@ -78,6 +81,7 @@ public static class HealthCheckConfiguration
     /// <param name="services">The service collection to configure.</param>
     /// <param name="expirationSeconds">The number of seconds a cached response remains valid.</param>
     /// <returns>The <see cref="IServiceCollection"/> so calls can be chained.</returns>
+    [ExcludeFromCodeCoverage]
     public static IServiceCollection AddHealthCheckOutputCache(this IServiceCollection services, int expirationSeconds)
     {
         return services
@@ -136,6 +140,7 @@ public static class HealthCheckConfiguration
         return app;
     }
 
+    [ExcludeFromCodeCoverage]
     private static WebApplication MapLivenessEndpoint(this WebApplication app, string name, string version)
     {
         var kebabName = name.Kebaberize();

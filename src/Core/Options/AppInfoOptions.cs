@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Describes identifying metadata about an application: its version, domain/boundary placement, description, and maintainer.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record AppInfoOptions
 {
     /// <summary>

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Aurore.Foundation.Core.Options;
 
@@ -6,6 +7,7 @@ namespace Aurore.Foundation.Core.Options;
 /// Describes the components needed to build a database connection string, as consumed by
 /// <see cref="Extensions.ConnectionStringOptionsExtensions"/>.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record DatabaseConnectionStringOptions
 {
     /// <summary>

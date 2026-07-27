@@ -1,0 +1,9 @@
+services:
+  tests:
+    build:
+      context: .
+      target: test
+    image: aurore-foundation:tests
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./test-results:/src/test-results

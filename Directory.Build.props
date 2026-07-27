@@ -38,8 +38,7 @@
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
     </PropertyGroup>
 
-    <!-- MTP code coverage extension, only for actual xunit test apps (not Tests.Shared, which
-         overrides IsTestProject back to false since it has no tests of its own). -->
+    <!-- MTP code coverage extension for xunit test apps -->
     <ItemGroup Condition="'$(IsTestProject)' == 'true'">
         <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.9.0" />
     </ItemGroup>

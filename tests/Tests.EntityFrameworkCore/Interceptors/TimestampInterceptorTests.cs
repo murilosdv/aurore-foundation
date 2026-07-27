@@ -5,7 +5,7 @@ using Aurore.Foundation.Core.Abstractions;
 using Aurore.Foundation.EntityFrameworkCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tests.EntityFrameworkCore.Interceptors;
+namespace Aurore.Foundation.Tests.EntityFrameworkCore.Interceptors;
 
 public class TimestampInterceptorTests
 {

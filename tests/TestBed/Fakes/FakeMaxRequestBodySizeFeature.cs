@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http.Features;
 
-namespace Tests.Shared.Fakes;
+namespace Aurore.Foundation.TestBed.Fakes;
 
 /// <summary>
 /// A minimal <see cref="IHttpMaxRequestBodySizeFeature"/> whose <see cref="IsReadOnly"/> can be toggled,

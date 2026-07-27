@@ -3,7 +3,7 @@ using System.Linq;
 using Aurore.Foundation.Core.Validation;
 using FluentValidation.Results;
 
-namespace Tests.Core.Validation;
+namespace Aurore.Foundation.Tests.Core.Validation;
 
 public class FluentValidationExtensionsTests
 {

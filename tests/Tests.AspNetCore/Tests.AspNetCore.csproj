@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <RootNamespace>Tests.AspNetCore</RootNamespace>
+        <RootNamespace>Aurore.Foundation.Tests.AspNetCore</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -19,7 +19,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\AspNetCore\AspNetCore.csproj" />
-        <ProjectReference Include="..\Tests.Shared\Tests.Shared.csproj" />
+        <ProjectReference Include="..\TestBed\TestBed.csproj" />
     </ItemGroup>
 
 </Project>

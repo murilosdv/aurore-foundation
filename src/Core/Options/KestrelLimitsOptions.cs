@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Aurore.Foundation.Core.Options;
 
 /// <summary>
 /// Configures Kestrel server connection and request limits.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed record KestrelLimitsOptions
 {
     /// <summary>

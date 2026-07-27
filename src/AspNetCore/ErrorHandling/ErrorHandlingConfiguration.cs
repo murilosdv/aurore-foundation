@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,6 +7,7 @@ namespace Aurore.Foundation.AspNetCore.ErrorHandling;
 /// <summary>
 /// Provides extension methods for registering RFC 7807 problem-details error handling.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class ErrorHandlingConfiguration
 {
     /// <summary>

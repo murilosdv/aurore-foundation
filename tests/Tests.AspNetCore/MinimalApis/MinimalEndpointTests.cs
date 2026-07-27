@@ -2,7 +2,7 @@ using Aurore.Foundation.AspNetCore.MinimalApis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
-namespace Tests.AspNetCore.MinimalApis;
+namespace Aurore.Foundation.Tests.AspNetCore.MinimalApis;
 
 public class MinimalEndpointTests
 {
