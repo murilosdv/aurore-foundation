@@ -2,11 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
-Read [the instructions file](./docs/instructions/changelog.md) to learn what and how to write here.
-
 ## [Unreleased]
 
 ---
+
+## [0.2.0] - 2026-07-28
+
+### Added
+
+- `RequestContext.IdempotencyKey` exposes the client-supplied `Idempotency-Key` header directly, so application code can read it without depending on the idempotency filter.
+- **EntityFrameworkCore**: `UseSnakeCaseNpgsqlHistoryTable()` renames the EF migrations history table's columns and primary key to snake_case, matching `UseSnakeCaseNamingConvention()`.
+- New `Messaging` package scaffolded for upcoming RabbitMQ support (not yet functional).
+
+### Changed
+
+- **Breaking**: `CorrelationContext` (and its `AddCorrelationContext`/`UseCorrelationContext` registration methods) is renamed to `RequestContext`/`AddRequestContext`/`UseRequestContext`, since it now also carries the idempotency key alongside the correlation and trace identifiers.
+
+### Fixed
+
+- The idempotency filter no longer caches error responses — only successful (2xx) results are replayed, so a retry after a transient failure reaches the handler again instead of getting the same stale failure replayed back.
+
+---
+
+## [0.1.1] - 2026-07-27
+
+Fixed a couple of minor things that were broken in 0.1.0, nothing major.
 
 ## [0.1.0] - 2026-07-26
 

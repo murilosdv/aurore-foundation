@@ -12,28 +12,29 @@ namespace Aurore.Foundation.AspNetCore.Middlewares;
 public static class MiddlewareConfiguration
 {
     /// <summary>
-    /// Registers the scoped <see cref="CorrelationContext"/> used to carry correlation and trace identifiers for the current request.
+    /// Registers the scoped <see cref="RequestContext"/> used to carry correlation, trace, and idempotency identifiers for the current request.
     /// </summary>
     /// <param name="services">The service collection to configure.</param>
     /// <returns>The <see cref="IServiceCollection"/> so calls can be chained.</returns>
     [ExcludeFromCodeCoverage]
-    public static IServiceCollection AddCorrelationContext(this IServiceCollection services)
+    public static IServiceCollection AddRequestContext(this IServiceCollection services)
     {
         return services
-            .AddScoped<CorrelationContext>();
+            .AddScoped<RequestContext>();
     }
 
     /// <summary>
     /// Adds middleware that resolves or generates a correlation identifier for the request, populates the
-    /// <see cref="CorrelationContext"/>, enriches the logging scope, and echoes the identifier (and trace parent) on the response.
+    /// <see cref="RequestContext"/> (correlation id, trace/span ids, and idempotency key), enriches the logging
+    /// scope, and echoes the correlation id (and trace parent) on the response.
     /// </summary>
     /// <param name="builder">The application builder to configure.</param>
     /// <returns>The <see cref="IApplicationBuilder"/> so calls can be chained.</returns>
     [ExcludeFromCodeCoverage]
-    public static IApplicationBuilder UseCorrelationContext(this IApplicationBuilder builder)
+    public static IApplicationBuilder UseRequestContext(this IApplicationBuilder builder)
     {
         return builder
-            .UseMiddleware<CorrelationMiddleware>();
+            .UseMiddleware<RequestContextMiddleware>();
     }
 
     /// <summary>

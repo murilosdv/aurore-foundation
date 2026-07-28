@@ -1,4 +1,3 @@
-using System.Linq;
 using Aurore.Foundation.Core.Constants;
 using Aurore.Foundation.EntityFrameworkCore.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;

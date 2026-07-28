@@ -17,7 +17,7 @@ builder.Services
     .AddDefaultApiVersioning()
     .AddJwtBearerAuthentication(identityProviderOptions)
     .AddDefaultJwtBearerAuthorization()
-    .AddCorrelationContext()
+    .AddRequestContext()
     .AddUnexpectedErrorHandler()
     .AddIdempotency(idempotencyOptions)
     .AddHealthCheckRateLimiter(permitLimit: 30, limitSeconds: 60)
@@ -31,7 +31,7 @@ builder.Services.AddOpenApi("v1", options => options
 
 var app = builder.Build();
 
-app.UseCorrelationContext()
+app.UseRequestContext()
     .UseRequestEnricher()
     .UseRequestBodySizeLimit()
     .UseSecurityHeaders(securityHeadersOptions, app.Environment.IsProduction())

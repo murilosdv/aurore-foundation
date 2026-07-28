@@ -1,17 +1,20 @@
 <Solution>
   <Folder Name="/Solutions Items/">
     <File Path="Directory.Build.props" />
+    <File Path="Versions.props" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="tests/TestBed/TestBed.csproj" />
     <Project Path="tests/Tests.AspNetCore/Tests.AspNetCore.csproj" />
     <Project Path="tests/Tests.Core/Tests.Core.csproj" />
     <Project Path="tests/Tests.EntityFrameworkCore/Tests.EntityFrameworkCore.csproj" />
+    <Project Path="tests/Tests.Messaging/Tests.Messaging.csproj" Id="beb4c57c-6d00-4414-82f8-020560df6681" />
     <Project Path="tests/Tests.OpenTelemetry/Tests.OpenTelemetry.csproj" />
   </Folder>
   <Folder Name="/Tools/" />
   <Project Path="src/AspNetCore/AspNetCore.csproj" />
   <Project Path="src/Core/Core.csproj" />
   <Project Path="src/EntityFrameworkCore/EntityFrameworkCore.csproj" />
+  <Project Path="src/Messaging/Messaging.csproj" Id="e8cbecd9-058f-4bd9-8c39-cb627e528c86" />
   <Project Path="src/OpenTelemetry/OpenTelemetry.csproj" />
 </Solution>
