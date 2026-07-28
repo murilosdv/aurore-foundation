@@ -4,8 +4,8 @@ using System.Net.Http;
 using Aurore.Foundation.AspNetCore.HealthChecks;
 using Aurore.Foundation.Core.Constants;
 using Aurore.Foundation.Core.Options;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 
 namespace Aurore.Foundation.Tests.AspNetCore.HealthChecks;

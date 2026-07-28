@@ -22,7 +22,7 @@ public static class ErrorHandlingConfiguration
             .AddExceptionHandler<UnexpectedExceptionHandler>()
             .AddProblemDetails(options =>
             {
-                // Correlation-Id and traceparent are already on every response via CorrelationMiddleware —
+                // Correlation-Id and traceparent are already on every response via RequestContextMiddleware —
                 // don't duplicate them into the body, and strip ASP.NET Core's default traceId extension.
                 options.CustomizeProblemDetails = context => context.ProblemDetails.Extensions.Remove("traceId");
             });

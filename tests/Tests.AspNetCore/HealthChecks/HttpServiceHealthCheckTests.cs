@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Aurore.Foundation.AspNetCore.HealthChecks;
 using Aurore.Foundation.Core.Errors;
 using Aurore.Foundation.TestBed.Fakes;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Aurore.Foundation.Tests.AspNetCore.HealthChecks;

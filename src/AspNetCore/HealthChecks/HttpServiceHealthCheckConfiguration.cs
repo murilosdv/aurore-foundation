@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aurore.Foundation.Core.Options;
 using Aurore.Foundation.Core.Constants;
+using Aurore.Foundation.Core.Options;
 using Humanizer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;

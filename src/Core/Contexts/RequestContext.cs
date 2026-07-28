@@ -1,9 +1,10 @@
 namespace Aurore.Foundation.Core.Contexts;
 
 /// <summary>
-/// Holds the correlation and distributed-tracing identifiers associated with the current request.
+/// Holds identifiers associated with the current request: correlation and distributed-tracing
+/// identifiers, and the client-supplied idempotency key, if any.
 /// </summary>
-public sealed class CorrelationContext
+public sealed class RequestContext
 {
     /// <summary>
     /// Gets the correlation identifier of the current request.
@@ -26,6 +27,11 @@ public sealed class CorrelationContext
     public string? OriginalSpanId { get; private set; }
 
     /// <summary>
+    /// Gets the client-supplied idempotency key for the current request, or <see langword="null"/> if none was sent.
+    /// </summary>
+    public string? IdempotencyKey { get; private set; }
+
+    /// <summary>
     /// Updates the correlation, trace, and span identifiers for the current request.
     /// </summary>
     /// <param name="correlationId">The correlation identifier to set.</param>
@@ -46,5 +52,14 @@ public sealed class CorrelationContext
     public void UpdateSpan(string? spanId)
     {
         SpanId = spanId;
+    }
+
+    /// <summary>
+    /// Sets the client-supplied idempotency key for the current request.
+    /// </summary>
+    /// <param name="idempotencyKey">The idempotency key to set, or <see langword="null"/> if the request didn't supply one.</param>
+    public void UpdateIdempotencyKey(string? idempotencyKey)
+    {
+        IdempotencyKey = idempotencyKey;
     }
 }

@@ -2,13 +2,13 @@ using Aurore.Foundation.Core.Contexts;
 
 namespace Aurore.Foundation.Tests.Core.Contexts;
 
-public class CorrelationContextTests
+public class RequestContextTests
 {
     [Fact(DisplayName = "Update sets the correlation, trace and span identifiers")]
     public void UpdateSetsAllIdentifiers()
     {
         // Arrange
-        var context = new CorrelationContext();
+        var context = new RequestContext();
 
         // Act
         context.Update("correlation-1", "trace-1", "span-1");
@@ -23,7 +23,7 @@ public class CorrelationContextTests
     public void OriginalSpanIdIsStickyAcrossUpdates()
     {
         // Arrange
-        var context = new CorrelationContext();
+        var context = new RequestContext();
 
         // Act
         context.Update("correlation-1", "trace-1", "span-1");
@@ -38,7 +38,7 @@ public class CorrelationContextTests
     public void UpdateSpanLeavesOriginalSpanIdUnchanged()
     {
         // Arrange
-        var context = new CorrelationContext();
+        var context = new RequestContext();
         context.Update("correlation-1", "trace-1", "span-1");
 
         // Act
@@ -47,5 +47,28 @@ public class CorrelationContextTests
         // Assert
         Assert.Equal("span-2", context.SpanId);
         Assert.Equal("span-1", context.OriginalSpanId);
+    }
+
+    [Fact(DisplayName = "UpdateIdempotencyKey sets IdempotencyKey")]
+    public void UpdateIdempotencyKeySetsIdempotencyKey()
+    {
+        // Arrange
+        var context = new RequestContext();
+
+        // Act
+        context.UpdateIdempotencyKey("key-1");
+
+        // Assert
+        Assert.Equal("key-1", context.IdempotencyKey);
+    }
+
+    [Fact(DisplayName = "IdempotencyKey is null by default when never set")]
+    public void IdempotencyKeyIsNullByDefault()
+    {
+        // Arrange
+        var context = new RequestContext();
+
+        // Act & Assert
+        Assert.Null(context.IdempotencyKey);
     }
 }

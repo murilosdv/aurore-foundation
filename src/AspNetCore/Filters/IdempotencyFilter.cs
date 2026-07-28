@@ -1,21 +1,20 @@
 using System;
 using System.Threading.Tasks;
-using Aurore.Foundation.AspNetCore.Extensions;
 using Aurore.Foundation.Core.Constants;
-using Aurore.Foundation.Core.Extensions;
+using Aurore.Foundation.Core.Contexts;
 using Aurore.Foundation.Core.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Hybrid;
 
 namespace Aurore.Foundation.AspNetCore.Filters;
 
-internal sealed class IdempotencyFilter(HybridCache cache, IdempotencyOptions options) : IEndpointFilter
+internal sealed class IdempotencyFilter(HybridCache cache, IdempotencyOptions options, RequestContext requestContext) : IEndpointFilter
 {
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        var key = context.HttpContext.GetRequestHeader(StandardHeaders.IdempotencyKey);
+        var key = requestContext.IdempotencyKey;
 
-        if (key.HasValue() is false)
+        if (key is null)
             return await next(context);
 
         var request = context.HttpContext.Request;
@@ -31,11 +30,13 @@ internal sealed class IdempotencyFilter(HybridCache cache, IdempotencyOptions op
                 {
                     var result = await state.next(state.context);
 
-                    // Results without a status code (rare custom IResult implementations) can't be
-                    // replayed faithfully, so they're never cached. Throwing here — rather than
-                    // returning a sentinel — stops GetOrCreateAsync from persisting anything, since
-                    // a factory exception is propagated but never written to the cache.
-                    if (result is not IStatusCodeHttpResult { StatusCode: { } statusCode })
+                    // Only successful (2xx) results are cached. Results without a status code (rare custom
+                    // IResult implementations) can't be replayed faithfully, and error results (4xx/5xx) are
+                    // often transient — caching one would replay the same failure to every retry with this key
+                    // for the rest of the cache duration instead of letting a retry actually try again.
+                    // Throwing here — rather than returning a sentinel — stops GetOrCreateAsync from persisting
+                    // anything, since a factory exception is propagated but never written to the cache.
+                    if (result is not IStatusCodeHttpResult { StatusCode: { } statusCode } || statusCode is < 200 or >= 300)
                         throw new NotCacheableResultException(result);
 
                     return new IdempotencyCacheEntry(statusCode, (result as IValueHttpResult)?.Value);

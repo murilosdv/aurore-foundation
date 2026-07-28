@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Aurore.Foundation.AspNetCore.Filters;
-using Aurore.Foundation.Core.Constants;
+using Aurore.Foundation.Core.Contexts;
 using Aurore.Foundation.Core.Options;
 using Aurore.Foundation.TestBed.Http;
 using Microsoft.AspNetCore.Http;
@@ -20,22 +20,25 @@ public class IdempotencyFilterTests
             .GetRequiredService<HybridCache>();
     }
 
-    private static DefaultEndpointFilterInvocationContext CreateInvocationContext(string? idempotencyKey)
+    private static RequestContext CreateRequestContext(string? idempotencyKey)
     {
-        var setup = HttpContextSetup.Create();
+        var requestContext = new RequestContext();
+        requestContext.UpdateIdempotencyKey(idempotencyKey);
 
-        if (idempotencyKey is not null)
-            setup.WithHeader(StandardHeaders.IdempotencyKey, idempotencyKey);
-
-        return new DefaultEndpointFilterInvocationContext(setup.Build());
+        return requestContext;
     }
 
-    [Fact(DisplayName = "InvokeAsync calls next directly without caching when no idempotency key header is present")]
+    private static DefaultEndpointFilterInvocationContext CreateInvocationContext()
+    {
+        return new DefaultEndpointFilterInvocationContext(HttpContextSetup.Create().Build());
+    }
+
+    [Fact(DisplayName = "InvokeAsync calls next directly without caching when no idempotency key is present")]
     public async Task CallsNextDirectlyWithoutKey()
     {
         // Arrange
-        var filter = new IdempotencyFilter(CreateCache(), new IdempotencyOptions());
-        var invocationContext = CreateInvocationContext(idempotencyKey: null);
+        var filter = new IdempotencyFilter(CreateCache(), new IdempotencyOptions(), CreateRequestContext(idempotencyKey: null));
+        var invocationContext = CreateInvocationContext();
         var callCount = 0;
         EndpointFilterDelegate next = _ =>
         {
@@ -66,8 +69,8 @@ public class IdempotencyFilterTests
         };
 
         // Act
-        var firstResult = await new IdempotencyFilter(cache, options).InvokeAsync(CreateInvocationContext("same-key"), next);
-        var secondResult = await new IdempotencyFilter(cache, options).InvokeAsync(CreateInvocationContext("same-key"), next);
+        var firstResult = await new IdempotencyFilter(cache, options, CreateRequestContext("same-key")).InvokeAsync(CreateInvocationContext(), next);
+        var secondResult = await new IdempotencyFilter(cache, options, CreateRequestContext("same-key")).InvokeAsync(CreateInvocationContext(), next);
 
         // Assert
         Assert.Equal(1, callCount);
@@ -97,12 +100,37 @@ public class IdempotencyFilterTests
         };
 
         // Act
-        var firstResult = await new IdempotencyFilter(cache, options).InvokeAsync(CreateInvocationContext("not-cacheable-key"), next);
-        var secondResult = await new IdempotencyFilter(cache, options).InvokeAsync(CreateInvocationContext("not-cacheable-key"), next);
+        var firstResult = await new IdempotencyFilter(cache, options, CreateRequestContext("not-cacheable-key")).InvokeAsync(CreateInvocationContext(), next);
+        var secondResult = await new IdempotencyFilter(cache, options, CreateRequestContext("not-cacheable-key")).InvokeAsync(CreateInvocationContext(), next);
 
         // Assert
         Assert.Equal("raw-string-result", firstResult);
         Assert.Equal("raw-string-result", secondResult);
         Assert.Equal(2, callCount);
+    }
+
+    [Fact(DisplayName = "InvokeAsync does not cache an error result, so a repeated key reaches the handler again")]
+    public async Task DoesNotCacheErrorStatusCodeResult()
+    {
+        // Arrange
+        var cache = CreateCache();
+        var options = new IdempotencyOptions();
+        var callCount = 0;
+        EndpointFilterDelegate next = _ =>
+        {
+            callCount++;
+            return ValueTask.FromResult<object?>(Results.Problem(statusCode: 500));
+        };
+
+        // Act
+        var firstResult = await new IdempotencyFilter(cache, options, CreateRequestContext("error-key")).InvokeAsync(CreateInvocationContext(), next);
+        var secondResult = await new IdempotencyFilter(cache, options, CreateRequestContext("error-key")).InvokeAsync(CreateInvocationContext(), next);
+
+        // Assert
+        Assert.Equal(2, callCount);
+        var firstStatus = Assert.IsAssignableFrom<IStatusCodeHttpResult>(firstResult);
+        var secondStatus = Assert.IsAssignableFrom<IStatusCodeHttpResult>(secondResult);
+        Assert.Equal(500, firstStatus.StatusCode);
+        Assert.Equal(500, secondStatus.StatusCode);
     }
 }

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Aurore.Foundation.Core.Contexts;
 using Aurore.Foundation.Core.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,12 @@ public static class FilterConfiguration
 
     /// <summary>
     /// Adds an endpoint filter that caches and replays the response for requests carrying the same idempotency key.
+    /// Only successful (2xx) results are cached — error results are never replayed, so a retry after a transient
+    /// failure still reaches the handler. This is a best-effort HTTP-layer replay for cheap, side-effect-free work;
+    /// it is not a durable guarantee (a cache eviction, restart, or additional instance can all cause the handler
+    /// to run again for the same key), so endpoints whose side effects must never run twice should enforce that
+    /// themselves — e.g. a dedup check in the same transaction as the write, keyed off <see cref="RequestContext.IdempotencyKey"/> —
+    /// rather than relying on this filter alone.
     /// </summary>
     /// <param name="builder">The route handler builder to configure.</param>
     /// <returns>The <see cref="RouteHandlerBuilder"/> so calls can be chained.</returns>

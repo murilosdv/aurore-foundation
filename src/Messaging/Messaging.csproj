@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Version>$(MessagingVersion)</Version>
+        <AssemblyName>Aurore.Foundation.Messaging</AssemblyName>
+        <RootNamespace>Aurore.Foundation.Messaging</RootNamespace>
+        <Product>Aurore Foundation @ Messaging</Product>
+        <Description>Messaging extensions and utilities for aurore projects.</Description>
+        <PackageTags>aurore messaging extensions utilities helpers</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Tests.Messaging" />
+    </ItemGroup>
+
+</Project>

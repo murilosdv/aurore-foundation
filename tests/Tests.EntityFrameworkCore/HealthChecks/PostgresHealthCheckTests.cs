@@ -1,8 +1,7 @@
-using System;
 using System.Threading.Tasks;
 using Aurore.Foundation.EntityFrameworkCore.HealthChecks;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging.Abstractions;
 using Npgsql;
 using Testcontainers.PostgreSql;

@@ -13,18 +13,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Aurore.Foundation.AspNetCore.Middlewares;
 
-internal sealed class CorrelationMiddleware(RequestDelegate next)
+internal sealed class RequestContextMiddleware(RequestDelegate next)
 {
     private const int MaxCorrelationIdLength = 64;
 
     public Task InvokeAsync(HttpContext context)
     {
-        var correlationContext = context.RequestServices.GetRequiredService<CorrelationContext>();
+        var requestContext = context.RequestServices.GetRequiredService<RequestContext>();
 
         var correlationId = SanitizeCorrelationId(context.GetRequestHeader(StandardHeaders.CorrelationId));
         var traceId = Activity.Current?.TraceId.ToString() ?? context.TraceIdentifier;
         var spanId = Activity.Current?.SpanId.ToString();
         var traceParent = Activity.Current?.Id;
+        var idempotencyKey = context.GetRequestHeader(StandardHeaders.IdempotencyKey);
 
         context.Response.OnStarting(() =>
         {
@@ -36,9 +37,10 @@ internal sealed class CorrelationMiddleware(RequestDelegate next)
             return Task.CompletedTask;
         });
 
-        correlationContext.Update(correlationId, traceId, spanId);
+        requestContext.Update(correlationId, traceId, spanId);
+        requestContext.UpdateIdempotencyKey(idempotencyKey.HasValue() ? idempotencyKey : null);
 
-        var logger = context.RequestServices.GetRequiredService<ILogger<CorrelationMiddleware>>();
+        var logger = context.RequestServices.GetRequiredService<ILogger<RequestContextMiddleware>>();
 
         using var scope = logger.BeginScope(new Dictionary<string, object?>
         {
