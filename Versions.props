@@ -2,7 +2,7 @@
     <PropertyGroup>
         <CoreVersion>0.2.0</CoreVersion>
         <AspNetCoreVersion>0.2.0</AspNetCoreVersion>
-        <EntityFrameworkCoreVersion>0.2.0</EntityFrameworkCoreVersion>
+        <EntityFrameworkCoreVersion>0.2.1</EntityFrameworkCoreVersion>
         <OpenTelemetryVersion>0.1.1</OpenTelemetryVersion>
         <MessagingVersion>0.1.0</MessagingVersion>
     </PropertyGroup>
