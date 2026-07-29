@@ -6,7 +6,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [0.2.0] - 2026-07-28
+## [2026-07-29]
+
+**Packages**: `EntityFrameworkCore 0.2.1`
+
+### Fixed
+
+- **EntityFrameworkCore**: `UseSnakeCaseNamingConvention()` now rewrites columns nested inside `ComplexProperty` mappings to snake_case too, including complex-in-complex nesting. Previously it only rewrote the entity's own scalar properties, so table-split complex properties (e.g. `Name.First`/`Name.Last`) kept their default PascalCase, prefixed column names (`"Name_First"`, `"Name_Last"`) untouched.
+
+---
+
+## [2026-07-28]
+
+**Packages**: `Core 0.2.0` · `AspNetCore 0.2.0` · `EntityFrameworkCore 0.2.0`
 
 ### Added
 
@@ -24,11 +36,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [0.1.1] - 2026-07-27
+## [2026-07-27]
+
+**Packages**: `Core 0.1.1` · `AspNetCore 0.1.1` · `EntityFrameworkCore 0.1.1` · `OpenTelemetry 0.1.1`
 
 Fixed a couple of minor things that were broken in 0.1.0, nothing major.
 
-## [0.1.0] - 2026-07-26
+---
+
+## [2026-07-26]
+
+**Packages**: `Core 0.1.0` · `AspNetCore 0.1.0` · `EntityFrameworkCore 0.1.0` · `OpenTelemetry 0.1.0`
 
 First stable release across all four packages.
 
