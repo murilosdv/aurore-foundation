@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <Version>$(CliCoreVersion)</Version>
-    <AssemblyName>Aurore.Foundation.CLI.Core</AssemblyName>
-    <RootNamespace>Aurore.Foundation.CLI.Core</RootNamespace>
+    <AssemblyName>Aurore.Foundation.CliCore</AssemblyName>
+    <RootNamespace>Aurore.Foundation.CliCore</RootNamespace>
     <Product>Aurore Foundation @ CLI Core</Product>
     <Description>Dependency-light CLI core and common utilities for CLI projects.</Description>
     <PackageTags>aurore cli-core abstractions utilities helpers</PackageTags>

@@ -1,7 +1,7 @@
 using System;
 using Spectre.Console;
 
-namespace Aurore.Foundation.CLI.Core.Extensions;
+namespace Aurore.Foundation.CliCore.Extensions;
 
 /// <summary>
 /// Provides consistent, severity-colored console output for CLI applications, safely escaping

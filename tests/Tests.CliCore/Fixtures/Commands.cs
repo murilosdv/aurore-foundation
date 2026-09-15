@@ -1,5 +1,5 @@
 using System.Threading;
-using Aurore.Foundation.CLI.Core.Attributes;
+using Aurore.Foundation.CliCore.Attributes;
 using Spectre.Console.Cli;
 
 namespace Aurore.Foundation.Tests.CliCore.Fixtures;

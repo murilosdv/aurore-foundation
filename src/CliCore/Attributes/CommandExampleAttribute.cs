@@ -1,6 +1,6 @@
 using System;
 
-namespace Aurore.Foundation.CLI.Core.Attributes;
+namespace Aurore.Foundation.CliCore.Attributes;
 
 /// <summary>
 /// Declares a usage example shown in the command's help text. Apply more than once to declare

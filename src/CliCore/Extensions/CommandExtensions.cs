@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aurore.Foundation.CLI.Core.Abstractions;
-using Aurore.Foundation.CLI.Core.Attributes;
+using Aurore.Foundation.CliCore.Abstractions;
+using Aurore.Foundation.CliCore.Attributes;
 using Spectre.Console;
 using Spectre.Console.Cli;
 
-namespace Aurore.Foundation.CLI.Core.Extensions;
+namespace Aurore.Foundation.CliCore.Extensions;
 
 /// <summary>
 /// Provides attribute-driven registration of commands and branches against Spectre.Console.Cli,

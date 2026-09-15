@@ -1,6 +1,6 @@
 using System;
 
-namespace Aurore.Foundation.CLI.Core.Attributes;
+namespace Aurore.Foundation.CliCore.Attributes;
 
 /// <summary>
 /// Declares the name and description a command or branch is registered under. Required on every

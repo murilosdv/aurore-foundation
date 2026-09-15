@@ -1,9 +1,9 @@
 using System;
-using Aurore.Foundation.CLI.Core.DependencyInjection;
+using Aurore.Foundation.CliCore.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
-namespace Aurore.Foundation.CLI.Core.Extensions;
+namespace Aurore.Foundation.CliCore.Extensions;
 
 /// <summary>
 /// Provides factory helpers for creating a Spectre.Console.Cli <see cref="CommandApp"/>.

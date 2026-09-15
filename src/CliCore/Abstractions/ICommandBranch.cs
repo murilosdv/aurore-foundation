@@ -1,6 +1,6 @@
 using Spectre.Console.Cli;
 
-namespace Aurore.Foundation.CLI.Core.Abstractions;
+namespace Aurore.Foundation.CliCore.Abstractions;
 
 /// <summary>
 /// Marks a type as a command branch that groups related commands under a shared name, to be

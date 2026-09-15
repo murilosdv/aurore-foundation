@@ -1,4 +1,4 @@
-using Aurore.Foundation.CLI.Core.DependencyInjection;
+using Aurore.Foundation.CliCore.DependencyInjection;
 using Aurore.Foundation.Tests.CliCore.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 

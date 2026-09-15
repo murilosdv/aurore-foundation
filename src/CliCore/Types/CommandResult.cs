@@ -1,4 +1,4 @@
-namespace Aurore.Foundation.CLI.Core.Types;
+namespace Aurore.Foundation.CliCore.Types;
 
 /// <summary>
 /// The captured output of a completed external process.

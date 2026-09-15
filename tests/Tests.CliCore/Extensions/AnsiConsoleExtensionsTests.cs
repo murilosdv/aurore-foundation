@@ -1,5 +1,5 @@
 using System;
-using Aurore.Foundation.CLI.Core.Extensions;
+using Aurore.Foundation.CliCore.Extensions;
 using Spectre.Console;
 
 namespace Aurore.Foundation.Tests.CliCore.Extensions;
