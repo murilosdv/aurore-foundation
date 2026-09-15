@@ -11,12 +11,12 @@ internal sealed class SecurityHeadersMiddleware(RequestDelegate next, SecurityHe
     {
         context.Response.OnStarting(() =>
         {
-            context.Response.Headers["X-Content-Type-Options"] = "nosniff";
-            context.Response.Headers["X-Frame-Options"] = "DENY";
+            context.Response.Headers.XContentTypeOptions = "nosniff";
+            context.Response.Headers.XFrameOptions = "DENY";
             context.Response.Headers["Referrer-Policy"] = "no-referrer";
 
             if (options.ContentSecurityPolicy.HasValue())
-                context.Response.Headers["Content-Security-Policy"] = options.ContentSecurityPolicy;
+                context.Response.Headers.ContentSecurityPolicy = options.ContentSecurityPolicy;
 
             return Task.CompletedTask;
         });

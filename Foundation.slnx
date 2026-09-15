@@ -1,17 +1,23 @@
 <Solution>
   <Folder Name="/Solutions Items/">
     <File Path="Directory.Build.props" />
+    <File Path="docker-compose.yml" />
+    <File Path="Dockerfile" />
+    <File Path="Makefile" />
     <File Path="Versions.props" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="tests/TestBed/TestBed.csproj" />
     <Project Path="tests/Tests.AspNetCore/Tests.AspNetCore.csproj" />
+    <Project Path="tests/Tests.CliCore/Tests.CliCore.csproj" />
     <Project Path="tests/Tests.Core/Tests.Core.csproj" />
     <Project Path="tests/Tests.EntityFrameworkCore/Tests.EntityFrameworkCore.csproj" />
     <Project Path="tests/Tests.Messaging/Tests.Messaging.csproj" Id="beb4c57c-6d00-4414-82f8-020560df6681" />
     <Project Path="tests/Tests.OpenTelemetry/Tests.OpenTelemetry.csproj" />
   </Folder>
-  <Folder Name="/Tools/" />
+  <Folder Name="/Tools/">
+    <Project Path="src/CliCore/CliCore.csproj" Id="9d07275d-67c3-4999-8ab9-8fc00f2a8b60" />
+  </Folder>
   <Project Path="src/AspNetCore/AspNetCore.csproj" />
   <Project Path="src/Core/Core.csproj" />
   <Project Path="src/EntityFrameworkCore/EntityFrameworkCore.csproj" />

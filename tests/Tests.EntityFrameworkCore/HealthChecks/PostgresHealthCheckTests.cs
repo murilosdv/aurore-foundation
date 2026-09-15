@@ -34,6 +34,7 @@ public sealed class PostgresContainerFixture : IAsyncLifetime
 public sealed class PostgresCollection : ICollectionFixture<PostgresContainerFixture>;
 
 [Collection(nameof(PostgresCollection))]
+[Trait("Category", "Integration")]
 public class PostgresHealthCheckTests(PostgresContainerFixture fixture)
 {
     private static PostgresHealthCheck CreateHealthCheck(string registrationKey, string connectionString)

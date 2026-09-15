@@ -39,7 +39,7 @@ public class MiddlewareConfigurationTests
         await feature.FireOnStartingAsync();
 
         // Assert
-        Assert.Equal("default-src 'self'", context.Response.Headers["Content-Security-Policy"]);
+        Assert.Equal("default-src 'self'", context.Response.Headers.ContentSecurityPolicy);
         Assert.True(context.Response.Headers.ContainsKey("Strict-Transport-Security"));
     }
 
@@ -55,7 +55,7 @@ public class MiddlewareConfigurationTests
         await feature.FireOnStartingAsync();
 
         // Assert
-        Assert.True(string.IsNullOrEmpty(context.Response.Headers["Content-Security-Policy"]));
+        Assert.True(string.IsNullOrEmpty(context.Response.Headers.ContentSecurityPolicy));
         Assert.False(context.Response.Headers.ContainsKey("Strict-Transport-Security"));
     }
 }

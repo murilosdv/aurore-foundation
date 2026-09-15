@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -14,11 +14,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="xunit.v3.mtp-v2" Version="3.2.2" />
+        <PackageReference Include="xunit.v3.mtp-v2" Version="4.0.1" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Core\Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />
     </ItemGroup>
 
 </Project>
