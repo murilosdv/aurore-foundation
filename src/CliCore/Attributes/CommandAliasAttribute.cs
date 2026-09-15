@@ -1,6 +1,6 @@
 using System;
 
-namespace Aurore.Foundation.CLI.Core.Attributes;
+namespace Aurore.Foundation.CliCore.Attributes;
 
 /// <summary>
 /// Declares an alternate name a command or branch can also be invoked by. Apply more than once

@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Aurore.Foundation.CLI.Core.Extensions;
+namespace Aurore.Foundation.CliCore.Extensions;
 
 /// <summary>
 /// Provides extension methods for <see cref="JsonElement"/>.

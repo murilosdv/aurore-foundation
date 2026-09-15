@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Aurore.Foundation.CLI.Core.Extensions;
+using Aurore.Foundation.CliCore.Extensions;
 
 namespace Aurore.Foundation.Tests.CliCore.Extensions;
 

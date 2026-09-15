@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aurore.Foundation.CLI.Core.Processes;
+namespace Aurore.Foundation.CliCore.Processes;
 
 /// <summary>
 /// Wraps common <c>dotnet</c> CLI invocations (tool management, EF Core migrations/database

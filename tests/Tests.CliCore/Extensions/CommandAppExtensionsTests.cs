@@ -1,4 +1,4 @@
-using Aurore.Foundation.CLI.Core.Extensions;
+using Aurore.Foundation.CliCore.Extensions;
 using Aurore.Foundation.Tests.CliCore.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;

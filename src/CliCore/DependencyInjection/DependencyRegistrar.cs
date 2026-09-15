@@ -2,7 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
-namespace Aurore.Foundation.CLI.Core.DependencyInjection;
+namespace Aurore.Foundation.CliCore.DependencyInjection;
 
 /// <summary>
 /// Bridges an <see cref="IServiceCollection"/> into Spectre.Console.Cli's own type registration

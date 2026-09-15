@@ -1,4 +1,4 @@
-using Aurore.Foundation.CLI.Core.Types;
+using Aurore.Foundation.CliCore.Types;
 
 namespace Aurore.Foundation.Tests.CliCore.Types;
 

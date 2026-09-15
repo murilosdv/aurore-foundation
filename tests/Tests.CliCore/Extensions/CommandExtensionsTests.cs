@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Aurore.Foundation.CLI.Core.Extensions;
+using Aurore.Foundation.CliCore.Extensions;
 using Aurore.Foundation.Tests.CliCore.Fixtures;
 using Spectre.Console.Cli;
 
