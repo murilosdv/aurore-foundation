@@ -29,8 +29,8 @@ public class SecurityHeadersMiddlewareTests
         await feature.FireOnStartingAsync();
 
         // Assert
-        Assert.Equal("nosniff", context.Response.Headers["X-Content-Type-Options"]);
-        Assert.Equal("DENY", context.Response.Headers["X-Frame-Options"]);
+        Assert.Equal("nosniff", context.Response.Headers.XContentTypeOptions);
+        Assert.Equal("DENY", context.Response.Headers.XFrameOptions);
         Assert.Equal("no-referrer", context.Response.Headers["Referrer-Policy"]);
     }
 
@@ -47,7 +47,7 @@ public class SecurityHeadersMiddlewareTests
         await feature.FireOnStartingAsync();
 
         // Assert
-        Assert.Equal("default-src 'self'", context.Response.Headers["Content-Security-Policy"]);
+        Assert.Equal("default-src 'self'", context.Response.Headers.ContentSecurityPolicy);
     }
 
     [Fact(DisplayName = "InvokeAsync omits Content-Security-Policy when it is null or empty")]
@@ -63,6 +63,6 @@ public class SecurityHeadersMiddlewareTests
         await feature.FireOnStartingAsync();
 
         // Assert
-        Assert.True(string.IsNullOrEmpty(context.Response.Headers["Content-Security-Policy"]));
+        Assert.True(string.IsNullOrEmpty(context.Response.Headers.ContentSecurityPolicy));
     }
 }
