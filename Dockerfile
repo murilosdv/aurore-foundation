@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-COPY global.json Directory.Build.props Versions.props Foundation.slnx ./
+COPY global.json Directory.Build.props Versions.props Foundation.slnx .editorconfig ./
 
 COPY --parents src/*/*.csproj tests/*/*.csproj ./
 
@@ -20,14 +20,15 @@ COPY <<EOF run-tests.sh
 #!/usr/bin/env bash
 set -euo pipefail
 
-packages=(Core AspNetCore EntityFrameworkCore OpenTelemetry)
+packages=(Core AspNetCore EntityFrameworkCore OpenTelemetry Messaging CliCore)
 results_dir=test-results
 
 for package in "\${packages[@]}"; do
     dotnet test "tests/Tests.\$package" --configuration Release \\
         --results-directory "\$results_dir/\$package" \\
         --coverage --coverage-output-format cobertura \\
-        --coverage-output "\$package.cobertura.xml"
+        --coverage-output "\$package.cobertura.xml" \\
+        -- --ignore-exit-code 8
 done
 
 reportgenerator \\

@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package-name: [Core, AspNetCore, EntityFrameworkCore, OpenTelemetry]
+        package-name: [Core, AspNetCore, EntityFrameworkCore, OpenTelemetry, Messaging, CliCore]
     uses: ./.github/workflows/package-pipeline.yml
     with:
       package-name: ${{ matrix.package-name }}
@@ -62,7 +62,7 @@ jobs:
 
           # Only packages whose version property actually changed go in the release.
           PACKAGE_LIST=""
-          for PACKAGE in Core AspNetCore EntityFrameworkCore OpenTelemetry; do
+          for PACKAGE in Core AspNetCore EntityFrameworkCore OpenTelemetry Messaging CliCore; do
             OLD_VERSION="$(echo "$OLD_VERSIONS_PROPS" | grep -oP "(?<=<${PACKAGE}Version>)[^<]+" || echo "")"
             NEW_VERSION="$(grep -oP "(?<=<${PACKAGE}Version>)[^<]+" Versions.props)"
 
