@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+**Packages**: `CliCore 0.1.0` (new) · `Core 0.2.1` · `AspNetCore 0.2.1` · `EntityFrameworkCore 0.2.2` · `OpenTelemetry 0.1.2`
+
+### Added
+
+- **CliCore**: a new package providing shared building blocks for Spectre.Console.Cli-based CLI projects: attribute-driven command/branch registration (`ConfigureCommand`, `ConfigureBranch`, `CommandInfoAttribute`, `CommandExampleAttribute`, `CommandAliasAttribute`), a dependency-injection bridge (`CommandApp.CreateWithServices`, `DependencyRegistrar`), a default exception handler (`UseDefaultExceptionHandler`) that renders failures consistently and returns a fixed exit code, severity-colored/labeled console output helpers (`AnsiConsoleExtensions`), a typed `dotnet` CLI process wrapper (`Dotnet.Tool`/`Migrations`/`Database`/`PackAsync`), and small JSON/process-result helpers.
+
+### Changed
+
+- Bumped NuGet dependencies across `Core`, `AspNetCore`, `EntityFrameworkCore` and `OpenTelemetry` to their latest compatible versions. No public API changes.
+- **AspNetCore**: `SecurityHeadersMiddleware` now sets `X-Content-Type-Options`, `X-Frame-Options` and `Content-Security-Policy` via ASP.NET Core's typed header properties instead of raw string indexers. Same header values, no behavior change.
+
 ---
 
 ## [2026-07-29]
