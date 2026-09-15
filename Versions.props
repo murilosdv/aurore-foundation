@@ -5,6 +5,6 @@
         <EntityFrameworkCoreVersion>0.2.2</EntityFrameworkCoreVersion>
         <OpenTelemetryVersion>0.1.2</OpenTelemetryVersion>
         <MessagingVersion>0.1.0</MessagingVersion>
-        <CliCoreVersion>0.1.0</CliCoreVersion>
+        <CliCoreVersion>0.1.1</CliCoreVersion>
     </PropertyGroup>
 </Project>
