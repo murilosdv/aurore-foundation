@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -36,6 +37,7 @@ public static class PathExtensions
             return Path.GetFullPath(Path.Combine(normalized));
         }
 
+        [SuppressMessage("Style", "IDE0051", Justification = "Used above via a method-group conversion (.Select(NormalizeSegment)) — IDE0051 doesn't trace usages of a private member declared inside an extension(...) block through a method group, only through explicit invocation syntax, so it's a false positive.")]
         private static string NormalizeSegment(string path)
         {
             if (OperatingSystem.IsWindows())

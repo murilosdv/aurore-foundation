@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+**Packages**: `Core 0.3.1` · `AspNetCore 0.2.2` · `EntityFrameworkCore 0.2.3`
+
+### Changed
+
+- Enabled `EnforceCodeStyleInBuild` so the code-style rules in `.editorconfig` (naming, braces, expression-vs-block bodies, etc.) are now enforced as real build warnings/errors instead of editor-only suggestions — brings a handful of existing files into compliance with rules that were already configured but never actually checked at build time. No public API or behavior changes.
+
+---
+
+## [2026-09-16]
+
 **Packages**: `Core 0.3.0`
 
 ### Added

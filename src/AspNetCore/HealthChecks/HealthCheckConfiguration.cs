@@ -23,7 +23,7 @@ namespace Aurore.Foundation.AspNetCore.HealthChecks;
 /// </summary>
 public static class HealthCheckConfiguration
 {
-    private static readonly Dictionary<HealthStatus, int> ResultStatusCodes = new()
+    private static readonly Dictionary<HealthStatus, int> _resultStatusCodes = new()
     {
         [HealthStatus.Healthy] = StatusCodes.Status200OK,
         [HealthStatus.Degraded] = StatusCodes.Status200OK,
@@ -110,7 +110,7 @@ public static class HealthCheckConfiguration
         {
             Predicate = check => ContainsReadinessTags(check, criticalOnly),
             AllowCachingResponses = true,
-            ResultStatusCodes = ResultStatusCodes,
+            ResultStatusCodes = _resultStatusCodes,
             ResponseWriter = criticalOnly
                 ? SimplifiedHealthCheckReadinessReport.WriteResponseAsync
                 : HealthCheckReadinessReport.WriteResponseAsync

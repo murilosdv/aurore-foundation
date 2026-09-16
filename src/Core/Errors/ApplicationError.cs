@@ -14,7 +14,7 @@ namespace Aurore.Foundation.Core.Errors;
 /// <param name="Instance">An optional identifier of the specific occurrence of the error.</param>
 public sealed record ApplicationError(int Code, string Name, string Title, string Detail, ErrorCategory Category, string? Instance = null)
 {
-    private static readonly Dictionary<ErrorCategory, int> CategoryDefaults = new()
+    private static readonly Dictionary<ErrorCategory, int> _categoryDefaults = new()
     {
         [ErrorCategory.Validation] = 400,
         [ErrorCategory.Unauthorized] = 401,
@@ -35,7 +35,7 @@ public sealed record ApplicationError(int Code, string Name, string Title, strin
     /// </summary>
     public int? HttpStatusCode
     {
-        get => field is null ? CategoryDefaults[Category] : field;
+        get => field is null ? _categoryDefaults[Category] : field;
         init;
     }
 

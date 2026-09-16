@@ -8,6 +8,7 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 
         <!-- Company Information -->
         <Authors>Aurore Development</Authors>
@@ -36,6 +37,7 @@
     <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
         <IsPackable>false</IsPackable>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);EnableGenerateDocumentationFile</NoWarn>
     </PropertyGroup>
 
     <!-- MTP code coverage extension for xunit test apps -->
