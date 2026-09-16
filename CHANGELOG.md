@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+**Packages**: `Core 0.3.0`
+
+### Added
+
+- `GuidExtensions.Shorten()`/`Unshorten()`/`TryUnshorten()` — a reversible, URL-safe, 22-character encoding for `Guid` values (base64url over the raw 16 bytes, no padding).
+
+### Changed
+
+- **Breaking**: `IEntity` (the default, unparameterized form of `IEntity<T>`) now resolves to `IEntity<Guid>` instead of `IEntity<long>`.
+- **Breaking**: `Obfuscator` no longer depends on Sqids — the scrambling is now a small in-house, invertible multiply-add (see the `Obfuscator` class docs for details). Along with that: `Configure` is now `Configure(string? alphabet = null)`, returning an `ObfuscatorRegistrationOptions` directly for `.Register<T>()` chaining, instead of taking a configuration callback; `MinimumLength` and `BlockList` are gone, since encoded identifiers are now a fixed width per numeric type (6 characters for `int`, 11 for `long`, with the default alphabet) rather than variable-length with a minimum floor — there's no length left to configure. One behavior change worth knowing: decoding with the wrong type salt (or the salt-less form on a salted string) is no longer detected — it now returns a different, wrong number instead of failing, since the new encoding has no redundant/checksum information to tell a correct decode from an incorrect one.
+
+### Removed
+
+- **Breaking**: the `Sqids` package dependency, and the unused `ObfuscationOptions` record.
+
+---
+
+## [2026-09-15]
+
 **Packages**: `CliCore 0.1.0` (new) · `Core 0.2.1` · `AspNetCore 0.2.1` · `EntityFrameworkCore 0.2.2` · `OpenTelemetry 0.1.2`
 
 ### Added

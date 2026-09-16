@@ -4,29 +4,17 @@ using System.Collections.Generic;
 namespace Aurore.Foundation.Core.Security;
 
 /// <summary>
-/// Configures the <see cref="Obfuscator"/> during its one-time <see cref="Obfuscator.Configure"/> call, including
-/// the encoding alphabet, minimum length, blocked words, and per-type salt registrations.
+/// Registers the entity types <see cref="Obfuscator"/> can salt-encode, returned by its one-time
+/// <see cref="Obfuscator.Configure"/> call. Each registration gets the next available type ID, in the order
+/// <see cref="Register{T}"/> is called, which is why registration happens once at startup in a fixed order
+/// rather than lazily on first use — an order that could vary between requests or instances would make the
+/// same (type, id) pair encode to different strings depending on which one happened to run first.
 /// </summary>
 public sealed class ObfuscatorRegistrationOptions
 {
     private int _nextId = 1;
 
     internal Dictionary<Type, int> Types { get; } = [];
-
-    /// <summary>
-    /// Gets or sets the minimum length of an encoded identifier.
-    /// </summary>
-    public int MinimumLength { get; set; }
-
-    /// <summary>
-    /// Gets or sets the set of characters used to build encoded identifiers.
-    /// </summary>
-    public string Alphabet { get; set; } = "";
-
-    /// <summary>
-    /// Gets or sets the set of words that must never appear in an encoded identifier.
-    /// </summary>
-    public HashSet<string> BlockList { get; set; } = [];
 
     /// <summary>
     /// Registers <typeparamref name="T"/> with the next available type ID, used to salt encoded identifiers for that type.

@@ -1,9 +1,11 @@
+using System;
+
 namespace Aurore.Foundation.Core.Abstractions;
 
 /// <summary>
-/// Represents an entity identified by an <see cref="int"/> key.
+/// Represents an entity identified by a <see cref="Guid"/> key.
 /// </summary>
-public interface IEntity : IEntity<int>;
+public interface IEntity : IEntity<Guid>;
 
 /// <summary>
 /// Represents an entity identified by a key of type <typeparamref name="T"/>.
