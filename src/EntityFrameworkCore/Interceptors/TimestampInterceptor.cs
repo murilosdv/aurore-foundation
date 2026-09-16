@@ -51,6 +51,7 @@ public sealed class TimestampInterceptor : SaveChangesInterceptor
         var now = DateTime.UtcNow;
 
         foreach (var entry in context.ChangeTracker.Entries<ITimestampedEntity>())
+        {
             if (entry.State is EntityState.Added or EntityState.Modified)
             {
                 if (entry.State is EntityState.Added)
@@ -58,5 +59,6 @@ public sealed class TimestampInterceptor : SaveChangesInterceptor
 
                 entry.Property(x => x.UpdatedAt).CurrentValue = now;
             }
+        }
     }
 }

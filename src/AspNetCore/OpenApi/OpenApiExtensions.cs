@@ -181,6 +181,7 @@ public static class OpenApiExtensions
                     operation.Parameters ??= [];
 
                     if (operation.Parameters.All(p => p.Name != StandardHeaders.CorrelationId))
+                    {
                         operation.Parameters.Add(new OpenApiParameter
                         {
                             Name = StandardHeaders.CorrelationId,
@@ -194,6 +195,7 @@ public static class OpenApiExtensions
                             },
                             Description = "Correlation Id for request tracking and tracing"
                         });
+                    }
                 }
             }
 
