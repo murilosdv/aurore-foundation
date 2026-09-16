@@ -10,15 +10,14 @@ public sealed class ObfuscatorFixture
 {
     public ObfuscatorFixture()
     {
-        Obfuscator.Configure(options =>
-        {
-            options.MinimumLength = 5;
-            options.Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            options.Register<RegisteredEntity>();
-        });
+        Obfuscator.Configure("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+            .Register<RegisteredEntity>()
+            .Register<AnotherRegisteredEntity>();
     }
 }
 
 public sealed class RegisteredEntity;
+
+public sealed class AnotherRegisteredEntity;
 
 public sealed class UnregisteredEntity;
