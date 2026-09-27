@@ -1,9 +1,9 @@
 <Project>
     <PropertyGroup>
         <CoreVersion>0.3.1</CoreVersion>
-        <AspNetCoreVersion>0.2.2</AspNetCoreVersion>
+        <AspNetCoreVersion>0.2.3</AspNetCoreVersion>
         <EntityFrameworkCoreVersion>0.3.0</EntityFrameworkCoreVersion>
-        <OpenTelemetryVersion>0.1.2</OpenTelemetryVersion>
+        <OpenTelemetryVersion>0.1.3</OpenTelemetryVersion>
         <MessagingVersion>0.1.0</MessagingVersion>
         <CliCoreVersion>0.1.1</CliCoreVersion>
     </PropertyGroup>
