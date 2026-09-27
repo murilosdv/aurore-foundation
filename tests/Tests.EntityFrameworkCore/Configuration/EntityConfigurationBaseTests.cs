@@ -1,3 +1,4 @@
+using System;
 using Aurore.Foundation.Core.Abstractions;
 using Aurore.Foundation.EntityFrameworkCore.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -6,9 +7,9 @@ namespace Aurore.Foundation.Tests.EntityFrameworkCore.Configuration;
 
 public class EntityConfigurationBaseTests
 {
-    private sealed class WidgetEntity : IEntity<int>
+    private sealed class WidgetEntity : IEntity
     {
-        public int Id { get; init; }
+        public Guid Id { get; init; }
     }
 
     private sealed class WidgetEntityConfiguration : EntityConfigurationBase<WidgetEntity>;
