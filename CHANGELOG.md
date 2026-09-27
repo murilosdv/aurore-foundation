@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+**Packages**: `AspNetCore 0.2.3` · `OpenTelemetry 0.1.3`
+
+### Changed
+
+- Bumped NuGet dependencies across `AspNetCore` (`Scalar.AspNetCore.Microsoft`) and `OpenTelemetry` (the `OpenTelemetry.*` packages) to their latest compatible versions. No public API changes.
+
+---
+
+## [2026-09-27]
+
 **Packages**: `EntityFrameworkCore 0.3.0`
 
 ### Changed
