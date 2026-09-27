@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+**Packages**: `EntityFrameworkCore 0.3.0`
+
+### Changed
+
+- **Breaking**: `EntityConfigurationBase<TEntity>` (the default, single-generic-argument base class) now requires `IEntity<Guid>` instead of `IEntity<int>`, matching `IEntity`'s own default key type. It was never updated when `IEntity` switched to `Guid`, so entities using the new default couldn't use this convenience base class at all.
+
+---
+
+## [2026-09-16]
+
 **Packages**: `Core 0.3.1` · `AspNetCore 0.2.2` · `EntityFrameworkCore 0.2.3`
 
 ### Changed

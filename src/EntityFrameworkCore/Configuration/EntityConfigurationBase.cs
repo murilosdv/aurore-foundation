@@ -1,3 +1,4 @@
+using System;
 using Aurore.Foundation.Core.Abstractions;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
@@ -6,11 +7,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Aurore.Foundation.EntityFrameworkCore.Configuration;
 
 /// <summary>
-/// Base class for <see cref="IEntityTypeConfiguration{TEntity}"/> implementations whose entity is keyed by an <see cref="int"/>.
+/// Base class for <see cref="IEntityTypeConfiguration{TEntity}"/> implementations whose entity is keyed by a <see cref="Guid"/>
+/// (i.e. implements the default, unparameterized <see cref="IEntity"/>).
 /// </summary>
 /// <typeparam name="TEntity">The entity type being configured.</typeparam>
-public abstract class EntityConfigurationBase<TEntity> : EntityConfigurationBase<TEntity, int>
-    where TEntity : class, IEntity<int>;
+public abstract class EntityConfigurationBase<TEntity> : EntityConfigurationBase<TEntity, Guid>
+    where TEntity : class, IEntity<Guid>;
 
 /// <summary>
 /// Base class for <see cref="IEntityTypeConfiguration{TEntity}"/> implementations that applies conventional
